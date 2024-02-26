@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "MRNgGVq0GznNdvH623oVkUYR4O+75teFkrcCde8h5XY=",
+  "Source": "foodies_yelp",
+  "BasePath": "_content/foodies_yelp",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
