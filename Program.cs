@@ -3,6 +3,8 @@ using foodies_yelp.Data;
 using foodies_yelp.Endpoints;
 using foodies_yelp.Services;
 using Microsoft.EntityFrameworkCore;
+using foodies_yelp.Options;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 var httpContextAccessor = new HttpContextAccessor();
@@ -10,14 +12,16 @@ var context = httpContextAccessor.HttpContext;
 
 ConfigurationManager configuration = builder.Configuration;
 
+ // Load configuration from appsettings.json
+builder.Configuration.AddJsonFile("appsettings.json");
+
 // Configure services
 builder.Services.AddHttpClient("YelpApiClient", client => 
 {
     client.BaseAddress = new Uri(configuration.GetValue<string>(YelpConstants.BaseAddress));    
 });
+builder.Services.Configure<Yelp>(builder.Configuration.GetSection(YelpConstants.SectionName));
 
-// Load configuration from appsettings.json
-builder.Configuration.AddJsonFile("appsettings.json");
 
 // Add YelpApiClient as a singleton with configuration
 builder.Services.AddSingleton<YelpApiClient>();

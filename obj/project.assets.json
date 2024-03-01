@@ -3307,19 +3307,19 @@
     ]
   },
   "packageFolders": {
-    "/home/kaycee/.nuget/packages/": {}
+    "/home/kayc/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/kaycee/repos/foodies/foodies_yelp/foodies_yelp.csproj",
+      "projectUniqueName": "/home/kayc/repos/foodies/foodies_yelp/foodies_yelp.csproj",
       "projectName": "foodies_yelp",
-      "projectPath": "/home/kaycee/repos/foodies/foodies_yelp/foodies_yelp.csproj",
-      "packagesPath": "/home/kaycee/.nuget/packages/",
-      "outputPath": "/home/kaycee/repos/foodies/foodies_yelp/obj/",
+      "projectPath": "/home/kayc/repos/foodies/foodies_yelp/foodies_yelp.csproj",
+      "packagesPath": "/home/kayc/.nuget/packages/",
+      "outputPath": "/home/kayc/repos/foodies/foodies_yelp/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/kaycee/.nuget/NuGet/NuGet.Config"
+        "/home/kayc/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
