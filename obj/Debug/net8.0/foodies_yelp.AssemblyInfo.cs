@@ -10,10 +10,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("8f27ce9c-2755-44df-b1e0-be1dfa3d1e98")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("foodies_yelp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+19d7bda2a9cd59f3541796f27d72b658f4511ac1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bec088214832a681b56781dd52fac7cd8932305d")]
 [assembly: System.Reflection.AssemblyProductAttribute("foodies_yelp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("foodies_yelp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

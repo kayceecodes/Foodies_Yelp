@@ -1,10 +1,11 @@
 ﻿using Newtonsoft.Json;
 using System.Net.Http.Headers;
-using foodies_yelp.Models;
 using foodies_yelp.Models.Dtos;
 using foodies_yelp.Models.Responses;
 using foodies_yelp.Models.Responses.Yelp;
 using Microsoft.IdentityModel.Tokens;
+using foodies_yelp.Options;
+using Microsoft.Extensions.Options;
 
 namespace foodies_yelp.Services;
 
@@ -19,23 +20,26 @@ interface IYelpApiClient
 public class YelpApiClient : IYelpApiClient
 {
     private readonly IHttpClientFactory _httpClientFactory;
+    private readonly HttpClient _httpClient;
     private readonly IConfiguration _configuration;
-
-    public YelpApiClient(IHttpClientFactory httpClientFactory, IConfiguration configuration)
+    private readonly IOptions<Yelp> _yelpOptions;
+    public YelpApiClient(IHttpClientFactory httpClientFactory, IConfiguration configuration, IOptions<Yelp> yelpOptions)
     {
         _httpClientFactory = httpClientFactory;
         _configuration = configuration;
+        _yelpOptions = yelpOptions;
+        _httpClient = _httpClientFactory.CreateClient("YelpApiClient");
     }
 
     public async Task<APIResult> GetBusinessById(string id)
     {
-        var token = _configuration.GetValue<string>(YelpConstants.ApiKeySectionName);
-        var httpClient = _httpClientFactory.CreateClient("YelpApiClient");
-        string url = httpClient.BaseAddress + $"/businesses/{id}";
-        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        var token = _configuration.GetValue<string>(YelpConstants.ApiKeyName);
+        
+        string url = _httpClient.BaseAddress + $"/businesses/{id}";
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
         // Make a GET request to Yelp Fusion API
-        HttpResponseMessage result = await httpClient.GetAsync(url);
+        HttpResponseMessage result = await _httpClient.GetAsync(url);
         var business = JsonConvert.DeserializeObject<Business>(await result.Content.ReadAsStringAsync());
 
         if (result.IsSuccessStatusCode)
@@ -61,7 +65,7 @@ public class YelpApiClient : IYelpApiClient
 
     public async Task<APIResult> GetBusinessesByLocation(string location)
     {
-        var token = _configuration.GetValue<string>(YelpConstants.ApiKeySectionName);
+        var token = _configuration.GetValue<string>(YelpConstants.ApiKeyName);
         var httpClient = _httpClientFactory.CreateClient("YelpApiClient");
         string url = httpClient.BaseAddress + $"/businesses/search?term=restaurant&sort_by=best_match&limit=20&location={location}";
         httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -93,7 +97,7 @@ public class YelpApiClient : IYelpApiClient
 
     public async Task<APIResult> GetBusinessByPhone(string number)
     {
-        var token = _configuration.GetValue<string>(YelpConstants.ApiKeySectionName);
+        var token = _configuration.GetValue<string>(YelpConstants.ApiKeyName);
         var httpClient = _httpClientFactory.CreateClient("YelpApiClient");
         string url = httpClient.BaseAddress + $"/businesses/search/phone?sort_by=best_match&phone={number}";
         httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -125,7 +129,8 @@ public class YelpApiClient : IYelpApiClient
 
     public async Task<APIResult> GetBusinesses(SearchDto dto)
     {
-        var token = _configuration.GetValue<string>(YelpConstants.ApiKeySectionName);
+        // var token = _configuration.GetValue<string>(YelpConstants.ApiKeyName);
+        var token = _yelpOptions.Value.Key;
         var httpClient = _httpClientFactory.CreateClient("YelpApiClient");
         string terms = string.Empty;
 
@@ -173,7 +178,7 @@ public class YelpApiClient : IYelpApiClient
 
     public async Task<APIResult> GetReviewById(string id)
     {
-        var token = _configuration.GetValue<string>(YelpConstants.ApiKeySectionName);
+        var token = _configuration.GetValue<string>(YelpConstants.ApiKeyName);
         var httpClient = _httpClientFactory.CreateClient("YelpApiClient");
         string url = httpClient.BaseAddress + $"/businesses/{id}/reviews";
         httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
