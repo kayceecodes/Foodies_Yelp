@@ -4,141 +4,93 @@ using foodies_yelp.Models.Dtos;
 using foodies_yelp.Models.Responses;
 using foodies_yelp.Models.Responses.Yelp;
 using Microsoft.IdentityModel.Tokens;
-using foodies_yelp.Options;
+using foodies_yelp.Models.Options;
 using Microsoft.Extensions.Options;
 
 namespace foodies_yelp.Services;
 
-interface IYelpApiClient
-{
-    Task<APIResult> GetBusinessById(string id);
-    Task<APIResult> GetBusinessesByLocation(string location);
-    Task<APIResult> GetBusinessByPhone(string phonenumber);
-    Task<APIResult> GetBusinesses(SearchDto dto);
-}
-
 public class YelpApiClient : IYelpApiClient
 {
-    private readonly IHttpClientFactory _httpClientFactory;
-    private readonly HttpClient _httpClient;
-    private readonly IConfiguration _configuration;
-    private readonly IOptions<Yelp> _yelpOptions;
-    public YelpApiClient(IHttpClientFactory httpClientFactory, IConfiguration configuration, IOptions<Yelp> yelpOptions)
+    private ILogger<YelpApiClient> _logger; 
+    private IHttpClientFactory _httpClientFactory;
+    private IConfiguration _configuration;
+    private Yelp _yelp;
+    public YelpApiClient(ILogger<YelpApiClient> logger, IHttpClientFactory httpClientFactory, IConfiguration configuration, IOptions<Yelp> yelpOptions)
     {
+        _logger = logger;
         _httpClientFactory = httpClientFactory;
         _configuration = configuration;
-        _yelpOptions = yelpOptions;
-        _httpClient = _httpClientFactory.CreateClient("YelpApiClient");
+        _yelp = yelpOptions.Value;
     }
 
-    public async Task<APIResult> GetBusinessById(string id)
+    public HttpClient CreateClient() 
     {
-        var token = _configuration.GetValue<string>(YelpConstants.ApiKeyName);
+        // var token = _configuration.GetValue<string>(YelpConstants.ApiKeyName);
+        var client = _httpClientFactory.CreateClient("YelpApiClient");
+        try {
+            var token = _yelp.Key;
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        }
+        catch(Exception ex) {
+            _logger.LogError(ex, "API token is missing.");
+        }
         
-        string url = _httpClient.BaseAddress + $"/businesses/{id}";
-        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        return client;
+    }
 
-        // Make a GET request to Yelp Fusion API
-        HttpResponseMessage result = await _httpClient.GetAsync(url);
+    public async Task<APIResult<Business>> GetBusinessById(string id)
+    {
+        HttpClient client = CreateClient();
+        string url = client.BaseAddress + $"/businesses/{id}";
+
+        HttpResponseMessage result = await client.GetAsync(url);
         var business = JsonConvert.DeserializeObject<Business>(await result.Content.ReadAsStringAsync());
 
         if (result.IsSuccessStatusCode)
-        {
-            return new APIResult()
-            {
-                IsSuccess = result.IsSuccessStatusCode,
-                Data = business ?? new(),
-                StatusCode = result.StatusCode
-            };
-        }
+            return APIResult<Business>.Pass(business ?? new ());
         else
-        {
-            // Handle exceptions (e.g., network issues)
-            return new APIResult()
-            {
-                IsSuccess = false,
-                StatusCode = result.StatusCode,
-                ErrorMessages = new() { result.ReasonPhrase }
-            };
-        }
+            return APIResult<Business>.Fail("Problem getting bussiness", result.StatusCode);
     }
 
-    public async Task<APIResult> GetBusinessesByLocation(string location)
+    public async Task<APIResult<List<Business>>> GetBusinessesByLocation(string location)
     {
-        var token = _configuration.GetValue<string>(YelpConstants.ApiKeyName);
-        var httpClient = _httpClientFactory.CreateClient("YelpApiClient");
-        string url = httpClient.BaseAddress + $"/businesses/search?term=restaurant&sort_by=best_match&limit=20&location={location}";
-        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        HttpClient client = CreateClient();
+        string url = client.BaseAddress + $"/businesses/search?term=restaurant&sort_by=best_match&limit=20&location={location}";
 
-        // Make a GET request to Yelp Fusion API
-        HttpResponseMessage result = await httpClient.GetAsync(url);
-        var businesses = JsonConvert.DeserializeObject<YelpResponse>(await result.Content.ReadAsStringAsync());
+        HttpResponseMessage result = await client.GetAsync(url);
+        var yelpResponse = JsonConvert.DeserializeObject<YelpResponse>(await result.Content.ReadAsStringAsync());
+        List<Business> businesses = yelpResponse?.Businesses ?? new List<Business>();
 
         if (result.IsSuccessStatusCode)
-        {
-            return new APIResult()
-            {
-                IsSuccess = result.IsSuccessStatusCode,
-                Data = businesses ?? new(),
-                // StatusCode = result.StatusCode
-            };
-        }
+            return APIResult<List<Business>>.Pass(businesses ?? new List<Business>());
         else
-        {
-            return new APIResult()
-            {
-                IsSuccess = false,
-                Data = new object(),
-                StatusCode = result.StatusCode,
-                ErrorMessages = new() { result.ReasonPhrase }
-            };
-        }
+            return APIResult<List<Business>>.Fail("Problem getting bussinesses", result.StatusCode);
     }
 
-    public async Task<APIResult> GetBusinessByPhone(string number)
+    public async Task<APIResult<Business>> GetBusinessByPhone(string number)
     {
-        var token = _configuration.GetValue<string>(YelpConstants.ApiKeyName);
-        var httpClient = _httpClientFactory.CreateClient("YelpApiClient");
-        string url = httpClient.BaseAddress + $"/businesses/search/phone?sort_by=best_match&phone={number}";
-        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        HttpClient client = CreateClient();
+        string url = client.BaseAddress + $"/businesses/search/phone?sort_by=best_match&phone={number}";
 
-        // Make a GET request to Yelp Fusion API
-        HttpResponseMessage result = await httpClient.GetAsync(url);
-        var businesses = JsonConvert.DeserializeObject<YelpResponse>(await result.Content.ReadAsStringAsync());
+        HttpResponseMessage result = await client.GetAsync(url);
+        var business = JsonConvert.DeserializeObject<Business>(await result.Content.ReadAsStringAsync());
 
         if (result.IsSuccessStatusCode)
-        {
-            return new APIResult()
-            {
-                IsSuccess = result.IsSuccessStatusCode,
-                Data = businesses ?? new(),
-                // StatusCode = result.StatusCode
-            };
-        }
+            return APIResult<Business>.Pass(business ?? new ());
         else
-        {
-            return new APIResult()
-            {
-                IsSuccess = false,
-                Data = new object(),
-                StatusCode = result.StatusCode,
-                ErrorMessages = new() { result.ReasonPhrase }
-            };
-        }
+            return APIResult<Business>.Fail("Problem getting bussiness", result.StatusCode);
     }
 
-    public async Task<APIResult> GetBusinesses(SearchDto dto)
+    public async Task<APIResult<List<Business>>> GetBusinesses(SearchDto dto)
     {
-        // var token = _configuration.GetValue<string>(YelpConstants.ApiKeyName);
-        var token = _yelpOptions.Value.Key;
-        var httpClient = _httpClientFactory.CreateClient("YelpApiClient");
-        string terms = string.Empty;
-
-        if(!dto.Terms.IsNullOrEmpty()) 
-        {
-            terms = dto.Terms.Count > 1 ? string.Join(", ", dto.Terms) : dto.Terms[0] + ", ";// add split for terms5
-            terms += "food, restaurant, dinner";
-        }
+        string terms = "food, dinner, restaurant";
+        // if(!dto.Terms.IsNullOrEmpty()) 
+        // {
+        //     terms = dto.Terms.Count > 1 ? string.Join(", ", dto.Terms) : dto.Terms[0] + ", ";// add split for terms5
+        //     terms += "food, restaurant, dinner";
+        // }
+        if(dto.Terms.Count > 0)
+            terms += string.Join(", ", dto.Terms);    
 
         bool IsMissingLatLong = dto.Lat.IsNullOrEmpty() || dto.Long.IsNullOrEmpty();
 
@@ -147,64 +99,30 @@ public class YelpApiClient : IYelpApiClient
         
         string endpoint ="/businesses/search"; 
         var query = $"?sort_by=best_match&limit={dto.Limit}&term={terms}&location={dto.Location}&latitude={dto.Lat}&longitude={dto.Long}&categories={dto.Category}";
-        string url = httpClient.BaseAddress + endpoint + query;
         
-        // Make a GET request to Yelp Fusion API
-        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-        HttpResponseMessage result = await httpClient.GetAsync(url);
-        var businesses = JsonConvert.DeserializeObject<YelpResponse>(await result.Content.ReadAsStringAsync());
+        HttpClient client = CreateClient();
+
+        string url = client.BaseAddress + endpoint + query;
+        HttpResponseMessage result = await client.GetAsync(url);
+        var businesses = JsonConvert.DeserializeObject<List<Business>>(await result.Content.ReadAsStringAsync());
 
         if (result.IsSuccessStatusCode)
-        {
-            return new APIResult()
-            {
-                IsSuccess = result.IsSuccessStatusCode,
-                Data = businesses ?? new(),
-                // StatusCode = result.StatusCode
-            };
-        }
+            return APIResult<List<Business>>.Pass(businesses ?? new List<Business>());
         else
-        {
-            return new APIResult()
-            {
-                IsSuccess = false,
-                Data = new object(),
-                StatusCode = result.StatusCode,
-                ErrorMessages = new() { result.ReasonPhrase }
-            };
-        }
+            return APIResult<List<Business>>.Fail("Problem getting bussinesses", result.StatusCode);
     }
 
-
-    public async Task<APIResult> GetReviewById(string id)
+    public async Task<APIResult<List<ReviewDto>>> GetReviewsById(string id)
     {
-        var token = _configuration.GetValue<string>(YelpConstants.ApiKeyName);
-        var httpClient = _httpClientFactory.CreateClient("YelpApiClient");
-        string url = httpClient.BaseAddress + $"/businesses/{id}/reviews";
-        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        HttpClient client = CreateClient();
+        string url = client.BaseAddress + $"/businesses/{id}/reviews";
 
-        // Make a GET request to Yelp Fusion API
-        HttpResponseMessage result = await httpClient.GetAsync(url);
-        var business = JsonConvert.DeserializeObject<Business>(await result.Content.ReadAsStringAsync());
+        HttpResponseMessage result = await client.GetAsync(url);
+        var reviews = JsonConvert.DeserializeObject<List<ReviewDto>>(await result.Content.ReadAsStringAsync());
 
         if (result.IsSuccessStatusCode)
-        {
-            return new APIResult()
-            {
-                IsSuccess = result.IsSuccessStatusCode,
-                Data = business ?? new(),
-                StatusCode = result.StatusCode
-            };
-        }
+            return APIResult<List<ReviewDto>>.Pass(reviews ?? new ());
         else
-        {
-            // Handle exceptions (e.g., network issues)
-            return new APIResult()
-            {
-                IsSuccess = false,
-                StatusCode = result.StatusCode,
-                ErrorMessages = new() { result.ReasonPhrase }
-            };
-        }
+            return APIResult<List<ReviewDto>>.Fail("Problem getting bussiness", result.StatusCode);
     }
 }

@@ -7,3 +7,9 @@
 
 ### 2/15
 1. Test if GetByLocation throws correct null ref exception
+
+### 3/2/15
+1. Organize Dtos & YelpResponse Models
+2. Move Models to foodies_api
+3. Work On Review Endpoint
+4. Add AutoMapper
