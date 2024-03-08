@@ -5,7 +5,7 @@ using foodies_yelp.Models.Responses.Yelp;
 namespace foodies_yelp;
 
 
-interface IYelpApiClient
+interface IYelpService
 {
     Task<APIResult<Business>> GetBusinessById(string id);
     Task<APIResult<List<Business>>> GetBusinessesByLocation(string location);

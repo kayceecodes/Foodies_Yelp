@@ -9,8 +9,8 @@ public static class ReviewEndpionts
     {
         app.MapGet("/api/restaurant/{id}/reviews/", async Task<IResult> (HttpContext context, string id) =>
         {
-            var YelpApiClient = app.Services.GetRequiredService<YelpApiClient>();
-            var result = await YelpApiClient.GetReviewsById(id);
+            var YelpService = app.Services.GetRequiredService<YelpService>();
+            var result = await YelpService.GetReviewsById(id);
 
             if (result.IsSuccess)
                 return TypedResults.Ok(result.Data);

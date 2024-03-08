@@ -15,15 +15,15 @@ ConfigurationManager configuration = builder.Configuration;
 // temporarily moved to check for user secrets //builder.Configuration.AddJsonFile("appsettings.json");
 
 // Configure services
-builder.Services.AddHttpClient("YelpApiClient", client => 
+builder.Services.AddHttpClient("YelpService", client => 
 {
     client.BaseAddress = new Uri(configuration.GetValue<string>(YelpConstants.BaseAddress));    
 });
 builder.Services.Configure<Yelp>(builder.Configuration.GetSection(YelpConstants.SectionName));
 
 
-// Add YelpApiClient as a singleton with configuration
-builder.Services.AddSingleton<YelpApiClient>();
+// Add YelpService as a singleton with configuration
+builder.Services.AddSingleton<YelpService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddDbContext<ApplicationDbContext>(

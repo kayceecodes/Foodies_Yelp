@@ -11,10 +11,24 @@ public static class RestaurantEndpoints
 {
     public static void ConfigurationRestaurantEndpoints(this WebApplication app) 
     {
+        app.MapGet("/api/restaurant/name/{name}/location/{location}", async Task<IResult> (HttpContext context, string name, string location) =>
+        {
+            var YelpService = app.Services.GetRequiredService<YelpService>();
+            APIResult<List<Business>> result = await YelpService.GetBusinessesByName(name, location);
+
+            if (result.IsSuccess)
+                return TypedResults.Ok(result.Data);
+            else
+                return TypedResults.BadRequest();
+        
+        }).WithName("GetRestaurantByNameAndLocation").Accepts<string>("application/json")
+        .Produces<APIResult<List<Business>>>(StatusCodes.Status200OK)
+        .Produces(StatusCodes.Status500InternalServerError);
+
         app.MapGet("/api/restaurant/{id}", async Task<IResult> (HttpContext context, string id) =>
         {
-            var YelpApiClient = app.Services.GetRequiredService<YelpApiClient>();
-            APIResult<Business> result = await YelpApiClient.GetBusinessById(id);
+            var YelpService = app.Services.GetRequiredService<YelpService>();
+            APIResult<Business> result = await YelpService.GetBusinessById(id);
 
             if (result.IsSuccess)
                 return TypedResults.Ok(result.Data);
@@ -27,8 +41,8 @@ public static class RestaurantEndpoints
         
         app.MapGet("/api/restaurant/location/{location}", async Task<IResult> (HttpContext context, string location) =>
         {
-            var YelpApiClient = app.Services.GetRequiredService<YelpApiClient>();
-            APIResult<List<Business>> result = await YelpApiClient.GetBusinessesByLocation(location);
+            var YelpService = app.Services.GetRequiredService<YelpService>();
+            APIResult<List<Business>> result = await YelpService.GetBusinessesByLocation(location);
 
             if (result.IsSuccess)
                 return TypedResults.Ok(result.Data);
@@ -41,8 +55,8 @@ public static class RestaurantEndpoints
         
         app.MapGet("/api/restaurant/phone/{phonenumber}", async Task<IResult> (HttpContext context, string phonenumber) =>
         {
-            var YelpApiClient = app.Services.GetRequiredService<YelpApiClient>();
-            APIResult<Business> result = await YelpApiClient.GetBusinessByPhone(phonenumber);
+            var YelpService = app.Services.GetRequiredService<YelpService>();
+            APIResult<Business> result = await YelpService.GetBusinessByPhone(phonenumber);
 
             if (result.IsSuccess)
                 return TypedResults.Ok(result.Data);
@@ -56,8 +70,8 @@ public static class RestaurantEndpoints
         // Uses Search object with propeerties used in Yelp's API
         app.MapPost("/api/restaurant/search/", async Task<IResult> (HttpContext context, [FromBody] SearchDto search) =>
         {
-            var YelpApiClient = app.Services.GetRequiredService<YelpApiClient>();
-            APIResult<List<Business>> result = await YelpApiClient.GetBusinesses(search);
+            var YelpService = app.Services.GetRequiredService<YelpService>();
+            APIResult<List<Business>> result = await YelpService.GetBusinesses(search);
 
             if (result.IsSuccess)
                 return TypedResults.Ok(result.Data);

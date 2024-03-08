@@ -9,13 +9,13 @@ using Microsoft.Extensions.Options;
 
 namespace foodies_yelp.Services;
 
-public class YelpApiClient : IYelpApiClient
+public class YelpService : IYelpService
 {
-    private ILogger<YelpApiClient> _logger; 
+    private ILogger<YelpService> _logger; 
     private IHttpClientFactory _httpClientFactory;
     private IConfiguration _configuration;
     private Yelp _yelp;
-    public YelpApiClient(ILogger<YelpApiClient> logger, IHttpClientFactory httpClientFactory, IConfiguration configuration, IOptions<Yelp> yelpOptions)
+    public YelpService(ILogger<YelpService> logger, IHttpClientFactory httpClientFactory, IConfiguration configuration, IOptions<Yelp> yelpOptions)
     {
         _logger = logger;
         _httpClientFactory = httpClientFactory;
@@ -26,7 +26,7 @@ public class YelpApiClient : IYelpApiClient
     public HttpClient CreateClient() 
     {
         // var token = _configuration.GetValue<string>(YelpConstants.ApiKeyName);
-        var client = _httpClientFactory.CreateClient("YelpApiClient");
+        var client = _httpClientFactory.CreateClient("YelpService");
         try {
             var token = _yelp.Key;
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -50,6 +50,27 @@ public class YelpApiClient : IYelpApiClient
             return APIResult<Business>.Pass(business ?? new ());
         else
             return APIResult<Business>.Fail("Problem getting bussiness", result.StatusCode);
+    }
+
+    public async Task<APIResult<List<Business>>> GetBusinessesByName(string name, string location)
+    {
+        HttpClient client = CreateClient();
+        string url = client.BaseAddress + $"/businesses/search?sort_by=best_match&limit=10&term={name}&location={location}";
+
+        if(name.IsNullOrEmpty())
+            throw new Exception("Name is missing");
+
+        if(location.IsNullOrEmpty())
+            throw new Exception("Location is missing");
+
+        HttpResponseMessage result = await client.GetAsync(url);
+        var yelpResponse = JsonConvert.DeserializeObject<YelpResponse>(await result.Content.ReadAsStringAsync());
+        List<Business> businesses = yelpResponse?.Businesses ?? new List<Business>();
+
+        if (result.IsSuccessStatusCode)
+            return APIResult<List<Business>>.Pass(businesses ?? new List<Business>());
+        else
+            return APIResult<List<Business>>.Fail("Problem getting bussinesses", result.StatusCode);
     }
 
     public async Task<APIResult<List<Business>>> GetBusinessesByLocation(string location)
