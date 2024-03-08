@@ -18,7 +18,7 @@ public static class ReviewEndpionts
                 return TypedResults.BadRequest();
         
         }).WithName("GetReviewById").Accepts<string>("application/json")
-        .Produces<List<ReviewDto>>(StatusCodes.Status200OK)
+        .Produces<List<Review>>(StatusCodes.Status200OK)
         .Produces(StatusCodes.Status400BadRequest);
 
         // app.MapPost("/api/review", async () => {}).WithName("AddReview").Accepts<ReviewDto>("application/json")

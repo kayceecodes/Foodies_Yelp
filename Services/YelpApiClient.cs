@@ -112,17 +112,19 @@ public class YelpApiClient : IYelpApiClient
             return APIResult<List<Business>>.Fail("Problem getting bussinesses", result.StatusCode);
     }
 
-    public async Task<APIResult<List<ReviewDto>>> GetReviewsById(string id)
+    public async Task<APIResult<List<Review>>> GetReviewsById(string id)
     {
         HttpClient client = CreateClient();
         string url = client.BaseAddress + $"/businesses/{id}/reviews";
 
         HttpResponseMessage result = await client.GetAsync(url);
-        var reviews = JsonConvert.DeserializeObject<List<ReviewDto>>(await result.Content.ReadAsStringAsync());
-
-        if (result.IsSuccessStatusCode)
-            return APIResult<List<ReviewDto>>.Pass(reviews ?? new ());
-        else
-            return APIResult<List<ReviewDto>>.Fail("Problem getting bussiness", result.StatusCode);
+        var response = JsonConvert.DeserializeObject<YelpResponse>(await result.Content.ReadAsStringAsync());
+        var reviews = response.Reviews;
+        
+        return new();
+        // if (result.IsSuccessStatusCode)
+        //     return APIResult<List<Review>.Pass(reviews );
+        // else
+        //     return APIResult<List<Review>>.Fail("Problem getting bussiness", result.StatusCode);
     }
 }

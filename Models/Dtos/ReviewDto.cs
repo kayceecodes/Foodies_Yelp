@@ -1,16 +1,16 @@
 ﻿namespace foodies_yelp.Models.Dtos;
 
-public class ReviewDto
+public class Review
 {
     public string Id { get; set; }
     public string Url { get; set; }
     public string Text { get; set; }
     public int Rating { get; set; }
-    public UserDto User { get; set; }
     public DateTime TimeCreated { get; set; }
+    public User User { get; set; }
 }
 
-public class UserDto 
+public class User 
 {
     public string Id { get; set; }
     public string ProfileUrl { get; set; }
