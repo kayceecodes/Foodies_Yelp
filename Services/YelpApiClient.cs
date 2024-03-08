@@ -73,8 +73,9 @@ public class YelpApiClient : IYelpApiClient
         string url = client.BaseAddress + $"/businesses/search/phone?sort_by=best_match&phone={number}";
 
         HttpResponseMessage result = await client.GetAsync(url);
-        var business = JsonConvert.DeserializeObject<Business>(await result.Content.ReadAsStringAsync());
-
+        var yelpResponse = JsonConvert.DeserializeObject<YelpResponse>(await result.Content.ReadAsStringAsync());
+        var business = yelpResponse?.Businesses?[0];
+        
         if (result.IsSuccessStatusCode)
             return APIResult<Business>.Pass(business ?? new ());
         else
@@ -84,13 +85,9 @@ public class YelpApiClient : IYelpApiClient
     public async Task<APIResult<List<Business>>> GetBusinesses(SearchDto dto)
     {
         string terms = "food, dinner, restaurant";
-        // if(!dto.Terms.IsNullOrEmpty()) 
-        // {
-        //     terms = dto.Terms.Count > 1 ? string.Join(", ", dto.Terms) : dto.Terms[0] + ", ";// add split for terms5
-        //     terms += "food, restaurant, dinner";
-        // }
+        
         if(dto.Terms.Count > 0)
-            terms += string.Join(", ", dto.Terms);    
+            terms += ", " + string.Join(", ", dto.Terms);    
 
         bool IsMissingLatLong = dto.Lat.IsNullOrEmpty() || dto.Long.IsNullOrEmpty();
 
@@ -98,16 +95,17 @@ public class YelpApiClient : IYelpApiClient
             throw new NullReferenceException("There no value for Lat, Long, or Location");  
         
         string endpoint ="/businesses/search"; 
-        var query = $"?sort_by=best_match&limit={dto.Limit}&term={terms}&location={dto.Location}&latitude={dto.Lat}&longitude={dto.Long}&categories={dto.Category}";
+        var query = $"?sort_by=best_match&limit={dto.Limit}&term={terms}&location={dto.Location}&latitude={dto.Lat}&longitude={dto.Long}";
         
         HttpClient client = CreateClient();
 
         string url = client.BaseAddress + endpoint + query;
         HttpResponseMessage result = await client.GetAsync(url);
-        var businesses = JsonConvert.DeserializeObject<List<Business>>(await result.Content.ReadAsStringAsync());
-
+        var yelpResponse = JsonConvert.DeserializeObject<YelpResponse>(await result.Content.ReadAsStringAsync());
+        var businesses = yelpResponse?.Businesses;
+        
         if (result.IsSuccessStatusCode)
-            return APIResult<List<Business>>.Pass(businesses ?? new List<Business>());
+            return APIResult<List<Business>>.Pass(businesses ?? new());
         else
             return APIResult<List<Business>>.Fail("Problem getting bussinesses", result.StatusCode);
     }
@@ -119,12 +117,11 @@ public class YelpApiClient : IYelpApiClient
 
         HttpResponseMessage result = await client.GetAsync(url);
         var response = JsonConvert.DeserializeObject<YelpResponse>(await result.Content.ReadAsStringAsync());
-        var reviews = response.Reviews;
+        var reviews = response?.Reviews;
         
-        return new();
-        // if (result.IsSuccessStatusCode)
-        //     return APIResult<List<Review>.Pass(reviews );
-        // else
-        //     return APIResult<List<Review>>.Fail("Problem getting bussiness", result.StatusCode);
+        if (result.IsSuccessStatusCode)
+            return APIResult<List<Review>>.Pass(reviews ?? new());
+        else
+            return APIResult<List<Review>>.Fail("Problem getting bussiness", result.StatusCode);
     }
 }
