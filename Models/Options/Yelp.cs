@@ -1,4 +1,4 @@
-﻿namespace foodies_yelp.Options;
+﻿namespace foodies_yelp.Models.Options;
 
 public class Yelp
 {

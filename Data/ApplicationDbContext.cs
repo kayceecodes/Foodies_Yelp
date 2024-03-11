@@ -14,6 +14,4 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
         base.OnModelCreating(builder);
     }
-    //   public virtual DbSet<User> Users { get; set; } = null!;
-    public virtual DbSet<Restaurant> Restaurants { get; set; } = null!;
 }
