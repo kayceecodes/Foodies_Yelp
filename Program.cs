@@ -14,13 +14,14 @@ ConfigurationManager configuration = builder.Configuration;
 //  // Load configuration from appsettings.json
 // temporarily moved to check for user secrets //builder.Configuration.AddJsonFile("appsettings.json");
 
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 // Configure services
 builder.Services.AddHttpClient("YelpService", client => 
 {
     client.BaseAddress = new Uri(configuration.GetValue<string>(YelpConstants.BaseAddress));    
 });
 builder.Services.Configure<Yelp>(builder.Configuration.GetSection(YelpConstants.SectionName));
-
 
 // Add YelpService as a singleton with configuration
 builder.Services.AddSingleton<YelpService>();
