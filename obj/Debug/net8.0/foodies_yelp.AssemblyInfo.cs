@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("foodies_yelp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+476c01591530be5663551628ced4a5e73300c800")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+aec51a7257054c3c7ec5b96d90b16b120039e382")]
 [assembly: System.Reflection.AssemblyProductAttribute("foodies_yelp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("foodies_yelp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
