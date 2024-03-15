@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace foodies_yelp.Models.Responses;
+namespace foodies_yelp.Models.Dtos.Responses;
 
 public class APIResult<T>
 {
