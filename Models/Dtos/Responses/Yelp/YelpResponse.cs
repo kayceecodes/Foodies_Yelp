@@ -1,6 +1,6 @@
 ﻿using foodies_yelp.Models.Dtos;
 
-namespace foodies_yelp.Models.Responses.Yelp;
+namespace foodies_yelp.Models.Dtos.Responses;
 
 public class YelpResponse
 {

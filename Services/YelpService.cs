@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using foodies_yelp.Models.Dtos;
-using foodies_yelp.Models.Responses;
-using foodies_yelp.Models.Responses.Yelp;
+using foodies_yelp.Models.Dtos.Responses;
+using foodies_yelp.Models.Dtos.Responses.Yelp;
 using Microsoft.IdentityModel.Tokens;
 using foodies_yelp.Models.Options;
 using Microsoft.Extensions.Options;
@@ -113,7 +113,7 @@ public class YelpService : IYelpService
         bool IsMissingLatLong = dto.Lat.IsNullOrEmpty() || dto.Long.IsNullOrEmpty();
 
         if (IsMissingLatLong && dto.Location.IsNullOrEmpty())
-            throw new NullReferenceException("There no value for Lat, Long, or Location");  
+            throw new NullReferenceException("There are no values for the following variables: Lat, Long, & Location.");  
         
         string endpoint ="/businesses/search"; 
         var query = $"?sort_by=best_match&limit={dto.Limit}&term={terms}&location={dto.Location}&latitude={dto.Lat}&longitude={dto.Long}";

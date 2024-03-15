@@ -1,4 +1,4 @@
-﻿namespace foodies_yelp.Models.Responses.Yelp;
+﻿namespace foodies_yelp.Models.Dtos.Responses.Yelp;
 
 public class Business
 {
