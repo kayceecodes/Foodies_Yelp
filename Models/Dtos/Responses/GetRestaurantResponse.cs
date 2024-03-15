@@ -1,0 +1,38 @@
+﻿using foodies_yelp.Models.Dtos.Responses.Yelp;
+
+namespace foodies_yelp;
+
+public class GetRestaurantResponse
+{
+    public string Alias { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
+    public string URL { get; set; } = string.Empty;
+    public int ReviewCount { get; set; }
+    public List<Review> Reviews { get; set; }
+    public List<Category> Categories { get; set; }
+    public int Rating { get; set; }
+    public Coordinates Coordinates { get; set; }
+    public Location Location { get; set; }
+    public string Price { get; set; } = string.Empty;
+}
+
+/*
+Alias
+Name
+Is Closed
+URL
+Review Count
+*Reviews
+Categories
+Rating
+Coordinates
+#Street Address
+#City
+#Zip
+#Country
+#State
+#Latitude
+#Longitude
+Price
+Phone
+Distance */

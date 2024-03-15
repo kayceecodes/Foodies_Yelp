@@ -1,4 +1,4 @@
-﻿using foodies_yelp.Models.Dtos;
+﻿using foodies_yelp.Models.Dtos.Requests;
 using foodies_yelp.Models.Dtos.Responses;
 using foodies_yelp.Models.Dtos.Responses.Yelp;
 

@@ -1,4 +1,4 @@
-﻿namespace foodies_yelp.Models.Dtos;
+﻿namespace foodies_yelp.Models.Dtos.Requests;
 
 public class SearchDto
 {
