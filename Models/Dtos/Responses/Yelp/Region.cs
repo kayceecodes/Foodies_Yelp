@@ -1,4 +1,4 @@
-﻿namespace foodies_yelp.Models.Dtos.Responses;
+﻿namespace foodies_yelp.Models.Dtos.Responses.Yelp;
 
 public class Region
 {

@@ -1,4 +1,4 @@
-﻿using foodies_yelp.Models.Dtos;
+﻿using foodies_yelp.Models.Dtos.Responses.Yelp;
 using foodies_yelp.Services;
 
 namespace foodies_yelp.Endpoints;

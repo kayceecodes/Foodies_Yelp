@@ -1,8 +1,8 @@
 ﻿using foodies_yelp.Models.Dtos;
 using Microsoft.AspNetCore.Mvc;
-using foodies_yelp.Models.Responses;
+using foodies_yelp.Models.Dtos.Responses;
 using foodies_yelp.Services;
-using foodies_yelp.Models.Responses.Yelp;
+using foodies_yelp.Models.Dtos.Responses.Yelp;
 
 
 namespace foodies_yelp.Endpoints;

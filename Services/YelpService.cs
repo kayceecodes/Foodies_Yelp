@@ -47,7 +47,7 @@ public class YelpService : IYelpService
         var business = JsonConvert.DeserializeObject<Business>(await result.Content.ReadAsStringAsync());
 
         if (result.IsSuccessStatusCode)
-            return APIResult<Business>.Pass(business ?? new ());
+            return APIResult<Business>.Pass(business);
         else
             return APIResult<Business>.Fail("Problem getting bussiness", result.StatusCode);
     }
@@ -65,10 +65,10 @@ public class YelpService : IYelpService
 
         HttpResponseMessage result = await client.GetAsync(url);
         var yelpResponse = JsonConvert.DeserializeObject<YelpResponse>(await result.Content.ReadAsStringAsync());
-        List<Business> businesses = yelpResponse?.Businesses ?? new List<Business>();
+        List<Business> businesses = yelpResponse?.Businesses ?? new ();
 
         if (result.IsSuccessStatusCode)
-            return APIResult<List<Business>>.Pass(businesses ?? new List<Business>());
+            return APIResult<List<Business>>.Pass(businesses);
         else
             return APIResult<List<Business>>.Fail("Problem getting bussinesses", result.StatusCode);
     }
@@ -80,10 +80,10 @@ public class YelpService : IYelpService
 
         HttpResponseMessage result = await client.GetAsync(url);
         var yelpResponse = JsonConvert.DeserializeObject<YelpResponse>(await result.Content.ReadAsStringAsync());
-        List<Business> businesses = yelpResponse?.Businesses ?? new List<Business>();
+        List<Business> businesses = yelpResponse?.Businesses ?? new ();
 
         if (result.IsSuccessStatusCode)
-            return APIResult<List<Business>>.Pass(businesses ?? new List<Business>());
+            return APIResult<List<Business>>.Pass(businesses);
         else
             return APIResult<List<Business>>.Fail("Problem getting bussinesses", result.StatusCode);
     }
@@ -98,7 +98,7 @@ public class YelpService : IYelpService
         var business = yelpResponse?.Businesses?[0];
         
         if (result.IsSuccessStatusCode)
-            return APIResult<Business>.Pass(business ?? new ());
+            return APIResult<Business>.Pass(business);
         else
             return APIResult<Business>.Fail("Problem getting bussiness", result.StatusCode);
     }
@@ -123,10 +123,10 @@ public class YelpService : IYelpService
         string url = client.BaseAddress + endpoint + query;
         HttpResponseMessage result = await client.GetAsync(url);
         var yelpResponse = JsonConvert.DeserializeObject<YelpResponse>(await result.Content.ReadAsStringAsync());
-        var businesses = yelpResponse?.Businesses;
-        
+        List<Business> businesses = yelpResponse?.Businesses ?? new ();
+
         if (result.IsSuccessStatusCode)
-            return APIResult<List<Business>>.Pass(businesses ?? new());
+            return APIResult<List<Business>>.Pass(businesses);
         else
             return APIResult<List<Business>>.Fail("Problem getting bussinesses", result.StatusCode);
     }
@@ -138,10 +138,10 @@ public class YelpService : IYelpService
 
         HttpResponseMessage result = await client.GetAsync(url);
         var response = JsonConvert.DeserializeObject<YelpResponse>(await result.Content.ReadAsStringAsync());
-        var reviews = response?.Reviews;
+        var reviews = response?.Reviews ?? new ();
         
         if (result.IsSuccessStatusCode)
-            return APIResult<List<Review>>.Pass(reviews ?? new());
+            return APIResult<List<Review>>.Pass(reviews);
         else
             return APIResult<List<Review>>.Fail("Problem getting bussiness", result.StatusCode);
     }
