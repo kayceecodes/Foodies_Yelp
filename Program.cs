@@ -4,6 +4,7 @@ using foodies_yelp.Endpoints;
 using foodies_yelp.Services;
 using Microsoft.EntityFrameworkCore;
 using foodies_yelp.Models.Options;
+using foodies_yelp.Profiles.RestaurantProfile;
 
 var builder = WebApplication.CreateBuilder(args);
 var httpContextAccessor = new HttpContextAccessor();
@@ -14,7 +15,7 @@ ConfigurationManager configuration = builder.Configuration;
 //  // Load configuration from appsettings.json
 // temporarily moved to check for user secrets //builder.Configuration.AddJsonFile("appsettings.json");
 
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddAutoMapper(typeof(RestaurantProfile));
 
 // Configure services
 builder.Services.AddHttpClient("YelpService", client => 
