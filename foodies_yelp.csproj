@@ -5,7 +5,17 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>8f27ce9c-2755-44df-b1e0-be1dfa3d1e98</UserSecretsId>
+    <Directories>foodies_yelp.testing</Directories>
   </PropertyGroup>
+<!--   
+  <Target Name="RemoveDirectories" AfterTargets="Build">
+    <RemoveDir Directories="$(DirectoriesToRemove)" />
+  </Target> -->
+
+  <ItemGroup>
+   <Compile Remove="foodies_yelp.testing/**" />
+   <Compile Include="foodies_yelp.testing\RestaurantTests.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Automapper" Version="13.0.1" />
@@ -21,14 +31,20 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Moq" Version="4.20.70" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0" />
+    <PackageReference Include="NUnit" Version="4.1.0" />
     <PackageReference Include="Restsharp" Version="110.2.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Models/Dtos/Requests/" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="foodies_yelp.testing\foodies_yelp.testing.csproj" />
   </ItemGroup>
 
 </Project>
