@@ -15,7 +15,7 @@ public class ReviewProfile : Profile
             .ForMember(dest => dest.TimeCreated, src => src.MapFrom(x => x.TimeCreated));
         
         CreateMap<User, GetReviewResponse>()
-            .ForMember(dest => dest.UsersName, src => src.MapFrom(x => x.Name))
+            .ForMember(dest => dest.UserName, src => src.MapFrom(x => x.Name))
             .ForMember(dest => dest.ImageUrl, src => src.MapFrom(x => x.ImageUrl));
     }
 }

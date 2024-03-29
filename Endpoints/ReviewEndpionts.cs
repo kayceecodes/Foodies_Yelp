@@ -13,9 +13,28 @@ public static class ReviewEndpionts
         {
             var YelpService = app.Services.GetRequiredService<YelpService>();
             var result = await YelpService.GetReviewsById(id);
+            List<Review> reviews = result.Data as List<Review>;
 
             if (result.IsSuccess)
-                return TypedResults.Ok(result.Data);
+            {
+                var mappedReviews = result.Data.Select(x => mapper.Map<GetReviewResponse>(x)).ToList();
+                var mappedUsers = reviews.Select(x => mapper.Map<GetReviewResponse>(x.User)).ToList();
+                                        // Combine lists
+                var mapped = (from review in mappedReviews
+                                    join user in mappedUsers on review.Id equals user.Id
+                                    select new GetReviewResponse
+                                    {
+                                        Id = review.Id,
+                                        UserName = user.UserName,
+                                        Rating = review.Rating,
+                                        Text = review.Text,
+                                        TimeCreated = review.TimeCreated,
+                                        Url = review.Url
+                                    }).ToList();
+
+
+                return TypedResults.Ok(mapped);
+            }
                 
             return TypedResults.BadRequest();
         
