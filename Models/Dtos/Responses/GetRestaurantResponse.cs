@@ -12,31 +12,9 @@ public class GetRestaurantResponse
     public List<Category> Categories { get; set; }
     public int Rating { get; set; }
     public Coordinates Coordinates { get; set; }
-    // public Location Location { get; set; }
     public string StreetAddress { get; set; }
     public string City { get; set; }
     public string State { get; set; }
     public string ZipCode { get; set; }
     public string Price { get; set; } = string.Empty;
 }
-
-/*
-Alias
-Name
-Is Closed
-URL
-Review Count
-*Reviews
-Categories
-Rating
-Coordinates
-#Street Address
-#City
-#Zip
-#Country
-#State
-#Latitude
-#Longitude
-Price
-Phone
-Distance */

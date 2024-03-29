@@ -13,10 +13,6 @@
   </Target> -->
 
   <ItemGroup>
-   <Compile Remove="foodies_yelp.testing/**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Automapper" Version="13.0.1" />
     <PackageReference Include="Json.Net" Version="1.0.33" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.1" />

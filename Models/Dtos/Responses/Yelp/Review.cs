@@ -1,6 +1,6 @@
 ﻿namespace foodies_yelp.Models.Dtos.Responses.Yelp;
 
-public class Review
+public class Review : User
 {
     public string Id { get; set; }
     public string Url { get; set; }

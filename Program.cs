@@ -5,6 +5,7 @@ using foodies_yelp.Services;
 using Microsoft.EntityFrameworkCore;
 using foodies_yelp.Models.Options;
 using foodies_yelp.Profiles.RestaurantProfile;
+using AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 var httpContextAccessor = new HttpContextAccessor();
@@ -12,10 +13,7 @@ var context = httpContextAccessor.HttpContext;
 
 ConfigurationManager configuration = builder.Configuration;
 
-//  // Load configuration from appsettings.json
-// temporarily moved to check for user secrets //builder.Configuration.AddJsonFile("appsettings.json");
-
-builder.Services.AddAutoMapper(typeof(RestaurantProfile));
+builder.Services.AddAutoMapper(typeof(RestaurantProfile), typeof(ReviewProfile));
 
 // Configure services
 builder.Services.AddHttpClient("YelpService", client => 
@@ -35,18 +33,6 @@ builder.Services.AddAuthorization();
 var app = builder.Build();
 
 app.UseHttpsRedirection();
-
-// builder.Services.AddCors(options =>
-// {
-//     options.AddPolicy(name: MyAllowSpecificOrigins,
-//                       policy  =>
-//                       {
-//                           policy.WithOrigins("http://example.com",
-//                                               "http://www.contoso.com");
-//                       });
-// });
-
-// app.MapGroup("Some Name - Auth Endpoints").AddEndpointFilter<ApiKeyEndpointFilter>();
 
 app.ConfigurationRestaurantEndpoints();
 app.ConfigurationReviewEndpoints();
