@@ -5,12 +5,12 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>8f27ce9c-2755-44df-b1e0-be1dfa3d1e98</UserSecretsId>
-    <Directories>foodies_yelp.testing</Directories>
+    <Directories>foodies_yelp.tests</Directories>
   </PropertyGroup>
-<!--   
+  
   <Target Name="RemoveDirectories" AfterTargets="Build">
     <RemoveDir Directories="$(DirectoriesToRemove)" />
-  </Target> -->
+  </Target>
 
   <ItemGroup>
     <PackageReference Include="Automapper" Version="13.0.1" />
@@ -34,12 +34,26 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
-  <ItemGroup>
+     <ItemGroup>
     <Folder Include="Models/Dtos/Requests/" />
+  </ItemGroup>
+<!-- 
+  <ItemGroup>
+    <Content Include="foodies_yelp.tests\foodies_yelp.tests.csproj" />
+    <Content Remove="foodies_yelp.tests\**" />
+  </ItemGroup> -->
+
+  <ItemGroup>
+    <Compile Remove="foodies_yelp.tests\**" />
+  </ItemGroup>
+  <!--
+
+  <ItemGroup>
+    <EmbeddedResource Remove="foodies_yelp.tests\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="foodies_yelp.testing\foodies_yelp.testing.csproj" />
-  </ItemGroup>
+    <None Remove="foodies_yelp.tests\**" />
+  </ItemGroup> -->
 
 </Project>

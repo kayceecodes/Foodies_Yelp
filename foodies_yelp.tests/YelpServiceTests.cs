@@ -6,9 +6,13 @@ using foodies_yelp.Models.Dtos.Requests;
 using foodies_yelp.Models.Dtos.Responses;
 using Microsoft.Extensions.Options;
 using foodies_yelp.Models.Options;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
+
 
 namespace foodies_yelp.testing;
 
+[TestFixture]
 public class YelpServiceTests
 {
     private List<Business> _businesses = new List<Business>(3);

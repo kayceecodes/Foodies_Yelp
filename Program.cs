@@ -38,4 +38,3 @@ app.ConfigurationRestaurantEndpoints();
 app.ConfigurationReviewEndpoints();
 
 app.Run();
-    
