@@ -38,7 +38,7 @@ public class YelpService : IYelpService
         return client;
     }
 
-    public async Task<APIResult<Business>> GetBusinessById(string id)
+    public async virtual Task<APIResult<Business>> GetBusinessById(string id)
     {
         HttpClient client = CreateClient();
         string url = client.BaseAddress + $"/businesses/{id}";
@@ -88,7 +88,7 @@ public class YelpService : IYelpService
             return APIResult<List<Business>>.Fail("Problem getting bussinesses", result.StatusCode);
     }
 
-    public async Task<APIResult<Business>> GetBusinessByPhone(string number)
+    public async virtual Task<APIResult<Business>> GetBusinessByPhone(string number)
     {
         HttpClient client = CreateClient();
         string url = client.BaseAddress + $"/businesses/search/phone?sort_by=best_match&phone={number}";
@@ -103,7 +103,7 @@ public class YelpService : IYelpService
             return APIResult<Business>.Fail("Problem getting bussiness", result.StatusCode);
     }
 
-    public async Task<APIResult<List<Business>>> GetBusinesses(SearchDto dto)
+    public async virtual Task<APIResult<List<Business>>> GetBusinesses(SearchDto dto)
     {
         string terms = "food, dinner, restaurant";
         
