@@ -1,15 +1,12 @@
 ﻿using foodies_yelp.Services;
-using NUnit.Framework;
 using Moq;
 using Moq.Protected;
 using foodies_yelp.Models.Dtos.Responses.Yelp;
 using foodies_yelp.Models.Dtos.Requests;
-using foodies_yelp.Models.Dtos.Responses;
 using Microsoft.Extensions.Options;
 using foodies_yelp.Models.Options;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
-using System.Net.Http;
 using Microsoft.Extensions.DependencyInjection;
 
 
@@ -22,7 +19,7 @@ public class YelpServiceTests
     private ILogger<YelpService> _mockLogger;
     private Mock<IHttpClientFactory> _mockHttpClientFactory;
     private IConfiguration _mockConfiguration;
-    private IOptions<Yelp> _mockYelpOptions;
+    private Mock<IOptions<Yelp>> _mockYelpOptions;
 
     [SetUp]
     public void Setup()
@@ -30,29 +27,21 @@ public class YelpServiceTests
         var service = new Mock<YelpService>();
         CreateBusinesses();
         CreateMockHttpClient();
+        _mockYelpOptions = new Mock<IOptions<Yelp>>();
         var mockSearchDto = new Mock<SearchDto>();
         var serviceProvider = new ServiceCollection()
             .AddLogging()
             .BuildServiceProvider();
         var factory = serviceProvider.GetService<ILoggerFactory>();
         _mockLogger = factory.CreateLogger<YelpService>();
-
-        service.Setup(x => x.GetBusinessById(It.IsAny<string>()))
-            .ReturnsAsync(new APIResult<Business>()
-            { IsSuccess = true, Data = _businesses[0] });
-        // service.Setup(x => x.GetBusinesses(It.IsAny<SearchDto>()))
-        //     .ReturnsAsync(new APIResult<List<Business>>() 
-        //     { IsSuccess = true, Data = _businesses});
-        service.Setup(x => x.GetBusinessByPhone(It.IsAny<string>()))
-            .ReturnsAsync(new APIResult<Business>()
-            { IsSuccess = true, Data = _businesses[0] });
     
         var settings = new Dictionary<string, string>()
         {
-            {"Yelp:Key", "TestKey" }
+            {"Yelp:Key", "TestKey" },
+            {"Key", "TestKey" }
         };
         _mockConfiguration = new ConfigurationBuilder().AddInMemoryCollection(settings).Build();
-
+        _mockYelpOptions.Setup(m => m.Value).Returns(new Yelp { Key = "Test Key" });
     }
 
     private void CreateMockHttpClient()
@@ -75,31 +64,30 @@ public class YelpServiceTests
                 BaseAddress = new Uri("https://api.yelp.com/v3")
             };
 
-        var mockHttpClientFactory = new Mock<IHttpClientFactory>();
+        _mockHttpClientFactory = new Mock<IHttpClientFactory>();
 
         _mockHttpClientFactory.Setup(_ => _.CreateClient("YelpService")).Returns(httpClient);        
     }
 
-    private List<Business> CreateBusinesses()
+    private void CreateBusinesses()
     {
-        var count = 0;
-        var businesses = _businesses;
-        
+        var businesses = new List<Business>();
+
         for (var i = 0; i < 3; i++)
             businesses.Add(new()
             {
-                Id = count.ToString(),
-                Name = "business #" + count,
-                Rating = count,
+                Id = i.ToString(),
+                Name = "business #" + i,
+                Rating = i,
                 Price = "$25.99"
             });
 
-        return businesses;
+        _businesses = businesses;
     }
 
     private YelpService CreateYelpService()
     {
-        var service = new YelpService(_mockLogger, _mockHttpClientFactory.Object, _mockConfiguration, _mockYelpOptions);
+        var service = new YelpService(_mockLogger, _mockHttpClientFactory.Object, _mockConfiguration, _mockYelpOptions.Object);
         return service;
     }
 
