@@ -34,7 +34,7 @@ public class YelpServiceTests
             .BuildServiceProvider();
         var factory = serviceProvider.GetService<ILoggerFactory>();
         _mockLogger = factory.CreateLogger<YelpService>();
-    
+
         var settings = new Dictionary<string, string>()
         {
             {"Yelp:Key", "TestKey" },
@@ -53,7 +53,7 @@ public class YelpServiceTests
         handlerMock
             .Protected()
             .Setup<Task<HttpResponseMessage>>(
-                "SendAsync",
+                "GetAsync",
                 ItExpr.IsAny<HttpRequestMessage>(),
                 ItExpr.IsAny<CancellationToken>()
             )
@@ -66,23 +66,20 @@ public class YelpServiceTests
 
         _mockHttpClientFactory = new Mock<IHttpClientFactory>();
 
-        _mockHttpClientFactory.Setup(_ => _.CreateClient("YelpService")).Returns(httpClient);        
+        _mockHttpClientFactory.Setup(_ => _.CreateClient("YelpService")).Returns(httpClient);
+            
     }
 
     private void CreateBusinesses()
     {
-        var businesses = new List<Business>();
-
         for (var i = 0; i < 3; i++)
-            businesses.Add(new()
+            _businesses.Add(new()
             {
                 Id = i.ToString(),
                 Name = "business #" + i,
                 Rating = i,
                 Price = "$25.99"
-            });
-
-        _businesses = businesses;
+            });   
     }
 
     private YelpService CreateYelpService()
