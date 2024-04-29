@@ -20,6 +20,7 @@ public class YelpServiceTests
     private Mock<IHttpClientFactory> _mockHttpClientFactory;
     private IConfiguration _mockConfiguration;
     private Mock<IOptions<Yelp>> _mockYelpOptions;
+    private readonly Mock<HttpMessageHandler> _handlerMock = new();
 
     [SetUp]
     public void Setup()
@@ -50,24 +51,20 @@ public class YelpServiceTests
 
         HttpResponseMessage result = new HttpResponseMessage();
 
-        handlerMock
-            .Protected()
-            .Setup<Task<HttpResponseMessage>>(
-                "GetAsync",
-                ItExpr.IsAny<HttpRequestMessage>(),
-                ItExpr.IsAny<CancellationToken>()
-            )
-            .ReturnsAsync(result)
-            .Verifiable();
+        // handlerMock
+        //     .Protected()
+        //     .Setup<Task<HttpResponseMessage>>(
+        //         "GetAsync",
+        //         ItExpr.IsAny<HttpRequestMessage>(),
+        //         ItExpr.IsAny<CancellationToken>()
+        //     )
+        //     .ReturnsAsync(result)
+        //     .Verifiable();
 
-        var httpClient = new HttpClient(handlerMock.Object) {
-                BaseAddress = new Uri("https://api.yelp.com/v3")
-            };
-
+        var mockHttpClient = new Mock<HttpClient>(handlerMock.Object){DefaultValue = new HttpClient(){BaseAddress = new Uri("https://api.yelp.com/v3")}};
         _mockHttpClientFactory = new Mock<IHttpClientFactory>();
 
-        _mockHttpClientFactory.Setup(_ => _.CreateClient("YelpService")).Returns(httpClient);
-            
+        _mockHttpClientFactory.Setup(_ => _.CreateClient("YelpService")).Returns(mockHttpClient.Object);           
     }
 
     private void CreateBusinesses()
