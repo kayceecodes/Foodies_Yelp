@@ -8,6 +8,8 @@ using foodies_yelp.Models.Options;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
+using System.Net;
 
 
 namespace foodies_yelp.testing;
@@ -48,17 +50,42 @@ public class YelpServiceTests
     {
         var handlerMock = new Mock<HttpMessageHandler>(MockBehavior.Strict);
 
-        HttpResponseMessage result = new HttpResponseMessage();
+        var yelpResponse = new YelpResponse()
+        {
+           Businesses = _businesses,
+           Reviews = new()
+        };
+        
+        var httpContent = new StringContent(JsonConvert.SerializeObject(yelpResponse));
+        HttpResponseMessage result = new HttpResponseMessage
+        {
+            Content = httpContent, 
+            StatusCode = HttpStatusCode.OK
+        };
 
         handlerMock
             .Protected()
             .Setup<Task<HttpResponseMessage>>(
-                "GetAsync",
+                "SendAsync",
                 ItExpr.IsAny<HttpRequestMessage>(),
                 ItExpr.IsAny<CancellationToken>()
             )
             .ReturnsAsync(result)
             .Verifiable();
+
+                    // Arrange
+        // var expectedResponse = new YelpResponse()
+        // {
+        //     Businesses = _businesses
+        // };
+
+        // var mockHttpClient = new Mock<HttpClient>();
+        // mockHttpClient.Setup(client => client.GetAsync(It.IsAny<string>()))
+        //               .ReturnsAsync(new HttpResponseMessage
+        //               {
+        //                   StatusCode = HttpStatusCode.OK,
+        //                   Content = new StringContent(JsonConvert.SerializeObject(expectedResponse))
+        //               });
 
         var httpClient = new HttpClient(handlerMock.Object) {
                 BaseAddress = new Uri("https://api.yelp.com/v3")
@@ -96,7 +123,7 @@ public class YelpServiceTests
         
         string id = result.Result.Data.Id;
 
-        Assert.Equals("1", id);
+        Assert.AreEqual("1", id);
     }
 
     [Test]
