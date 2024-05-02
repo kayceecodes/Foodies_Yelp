@@ -103,7 +103,7 @@ public class YelpService : IYelpService
             return APIResult<Business>.Fail("Problem getting bussiness", result.StatusCode);
     }
 
-    public async virtual Task<APIResult<List<Business>>> GetBusinesses(SearchDto dto)
+    public async virtual Task<APIResult<List<Business>>> GetBusinessesByKeywords(SearchDto dto)
     {
         string terms = "food, dinner, restaurant";
         

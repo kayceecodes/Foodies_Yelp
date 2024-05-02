@@ -85,7 +85,7 @@ public static class RestaurantEndpoints
         app.MapPost("/api/restaurant/search/", async Task<IResult> (HttpContext context, [FromServices] IMapper mapper, [FromBody] SearchDto search) =>
         {
             var YelpService = app.Services.GetRequiredService<YelpService>();
-            APIResult<List<Business>> result = await YelpService.GetBusinesses(search);
+            APIResult<List<Business>> result = await YelpService.GetBusinessesByKeywords(search);
 
             if (result.IsSuccess)
             {

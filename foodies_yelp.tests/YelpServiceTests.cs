@@ -27,6 +27,7 @@ public class YelpServiceTests
     public void Setup()
     {
         CreateBusinesses();
+        CreateReviews();
         var service = new Mock<YelpService>();
         _mockYelpOptions = new Mock<IOptions<Yelp>>();
         var mockSearchDto = new Mock<SearchDto>();
@@ -96,7 +97,7 @@ public class YelpServiceTests
         var response = new YelpResponse()
         {
             Businesses = _businesses,
-            Reviews = new()
+            Reviews = _reviews
         };
 
         return response;
@@ -135,7 +136,7 @@ public class YelpServiceTests
                 Name = "business #" + i,
                 Rating = i,
                 TimeCreated = DateTime.Now,
-                User = new()
+                User = new() { Id = i.ToString()  }
             });  
     }
 
@@ -198,7 +199,7 @@ public class YelpServiceTests
     }
 
     [Test]
-    public void GetBusinesses_Valid()
+    public void GetBusinessesByKeywords_Valid()
     {
         var yelpResponse = CreateYelpResponse();
         CreateMockHttpClient(yelpResponse);
@@ -209,9 +210,9 @@ public class YelpServiceTests
             Location = "Test Location",
             Lat = "0",
             Long = "0",
-            Terms = new() { "test", "term"},        
+            Terms = ["test", "term"],        
         };
-        var response = service.GetBusinesses(searchDto);
+        var response = service.GetBusinessesByKeywords(searchDto);
         var lastBusiness = response.Result.Data.Last();
         
         Assert.That(response.Result.IsSuccess.Equals(true));
@@ -228,9 +229,10 @@ public class YelpServiceTests
         var service = CreateYelpService();
 
         var response = service.GetReviewsById("2");
-        var lastBusiness = response.Result.Data.Last();
-        
+        var lastReview = response.Result.Data.Last();
+
         Assert.That(response.Result.IsSuccess.Equals(true));
-        Assert.That(response.Result.Data.Count, Is.EqualTo(3));
+        Assert.That(response.Result.Data, Has.Count.EqualTo(3));
+        Assert.That(lastReview.User.Id, Is.EqualTo("2"));
     }
 }
