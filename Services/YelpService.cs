@@ -13,13 +13,11 @@ public class YelpService : IYelpService
 {
     private ILogger<YelpService> _logger; 
     private IHttpClientFactory _httpClientFactory;
-    private IConfiguration _configuration;
     private Yelp _yelp;
-    public YelpService(ILogger<YelpService> logger, IHttpClientFactory httpClientFactory, IConfiguration configuration, IOptions<Yelp> yelpOptions)
+    public YelpService(ILogger<YelpService> logger, IHttpClientFactory httpClientFactory, IOptions<Yelp> yelpOptions)
     {
         _logger = logger;
         _httpClientFactory = httpClientFactory;
-        _configuration = configuration;
         _yelp = yelpOptions.Value;
     }
 

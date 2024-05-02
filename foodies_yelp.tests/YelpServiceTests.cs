@@ -6,7 +6,6 @@ using foodies_yelp.Models.Dtos.Requests;
 using Microsoft.Extensions.Options;
 using foodies_yelp.Models.Options;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System.Net;
@@ -16,11 +15,10 @@ namespace foodies_yelp.testing;
 [TestFixture]
 public class YelpServiceTests
 {
-    private List<Business> _businesses = new List<Business>(3);
-    private List<Review> _reviews = new List<Review>(3);
+    private List<Business> _businesses;
+    private List<Review> _reviews;
     private ILogger<YelpService> _mockLogger;
     private Mock<IHttpClientFactory> _mockHttpClientFactory;
-    private IConfiguration _mockConfiguration;
     private Mock<IOptions<Yelp>> _mockYelpOptions;
 
     [SetUp]
@@ -37,16 +35,10 @@ public class YelpServiceTests
         var factory = serviceProvider.GetService<ILoggerFactory>();
         _mockLogger = factory.CreateLogger<YelpService>();
 
-        var settings = new Dictionary<string, string>()
-        {
-            {"Yelp:Key", "TestKey" },
-            {"Key", "TestKey" }
-        };
-        _mockConfiguration = new ConfigurationBuilder().AddInMemoryCollection(settings).Build();
         _mockYelpOptions.Setup(m => m.Value).Returns(new Yelp { Key = "Test Key" });
     }
 
-    private void CreateMockHttpClient(YelpResponse yelpResponse = null!)
+    private void CreateMockHttpClient(HttpStatusCode statusCode, YelpResponse yelpResponse = null!)
     {
         var handlerMock = new Mock<HttpMessageHandler>(MockBehavior.Strict);
         StringContent httpContent;
@@ -66,7 +58,7 @@ public class YelpServiceTests
         HttpResponseMessage result = new HttpResponseMessage
         {
             Content = httpContent, 
-            StatusCode = HttpStatusCode.OK
+            StatusCode = statusCode
         };
 
         handlerMock
@@ -142,14 +134,14 @@ public class YelpServiceTests
 
     private YelpService CreateYelpService()
     {
-        var service = new YelpService(_mockLogger, _mockHttpClientFactory.Object, _mockConfiguration, _mockYelpOptions.Object);
+        var service = new YelpService(_mockLogger, _mockHttpClientFactory.Object, _mockYelpOptions.Object);
         return service;
     }
 
     [Test]
     public void CreateClient_StateUnderTest_Valid()
     {
-        CreateMockHttpClient();
+        CreateMockHttpClient(HttpStatusCode.OK);
         var service = CreateYelpService();
         var result = service.CreateClient();
 
@@ -159,7 +151,7 @@ public class YelpServiceTests
     [Test]
     public void GetBusinessById_Valid()
     {
-        CreateMockHttpClient();
+        CreateMockHttpClient(HttpStatusCode.OK);
 
         var service = CreateYelpService();
         var response = service.GetBusinessById("0");
@@ -174,7 +166,7 @@ public class YelpServiceTests
     public void GetBusinessByPhone_Valid()
     {
         var yelpResponse = CreateYelpResponse();
-        CreateMockHttpClient(yelpResponse);
+        CreateMockHttpClient(HttpStatusCode.OK, yelpResponse);
         
         var service = CreateYelpService();
         var response = service.GetBusinessByPhone("(555) 555 - 5555");
@@ -187,7 +179,7 @@ public class YelpServiceTests
     public void GetBusinessesByLocation_Valid()
     {
         var yelpResponse = CreateYelpResponse();
-        CreateMockHttpClient(yelpResponse);
+        CreateMockHttpClient(HttpStatusCode.OK, yelpResponse);
 
         var service = CreateYelpService();
         var response = service.GetBusinessesByLocation("Some Location");
@@ -202,7 +194,7 @@ public class YelpServiceTests
     public void GetBusinessesByKeywords_Valid()
     {
         var yelpResponse = CreateYelpResponse();
-        CreateMockHttpClient(yelpResponse);
+        CreateMockHttpClient(HttpStatusCode.OK, yelpResponse);
 
         var service = CreateYelpService();
         var searchDto = new SearchDto() 
@@ -224,7 +216,7 @@ public class YelpServiceTests
     public void GetReviewsById_Valid()
     {
         var yelpResponse = CreateYelpResponse();
-        CreateMockHttpClient(yelpResponse);
+        CreateMockHttpClient(HttpStatusCode.OK, yelpResponse);
 
         var service = CreateYelpService();
 
