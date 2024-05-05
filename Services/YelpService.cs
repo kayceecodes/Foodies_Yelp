@@ -108,9 +108,9 @@ public class YelpService : IYelpService
         if(dto.Terms.Count > 0)
             terms += ", " + string.Join(", ", dto.Terms);    
 
-        bool IsMissingLatLong = dto.Lat.IsNullOrEmpty() || dto.Long.IsNullOrEmpty();
+        bool IsMissingCoordinates = dto.Lat.IsNullOrEmpty() || dto.Long.IsNullOrEmpty();
 
-        if (IsMissingLatLong && dto.Location.IsNullOrEmpty())
+        if (IsMissingCoordinates && dto.Location.IsNullOrEmpty())
             throw new NullReferenceException("There are no values for the following variables: Lat, Long, & Location.");  
         
         string endpoint ="/businesses/search"; 
