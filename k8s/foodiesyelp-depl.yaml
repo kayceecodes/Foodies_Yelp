@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: foodiesyelp-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: foodiesyelp-depl
+  template:
+    metadata:
+      labels:
+        app: foodiesyelp-depl
+    spec:
+      containers:
+        - name: foodiesyelp-depl
+          image: kayceecode/foodiesyelp
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: foodiesyelp-clusterip-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: foodiesyelp
+  ports:
+    - "8080:8080"
+    - name: foodiesyelp
+      protocol: TCP
+      port: 80
+      targetPort: 80

@@ -26,9 +26,8 @@ public class YelpServiceTests
     {
         CreateBusinesses();
         CreateReviews();
-        var service = new Mock<YelpService>();
         _mockYelpOptions = new Mock<IOptions<Yelp>>();
-        var mockSearchDto = new Mock<SearchDto>();
+       
         var serviceProvider = new ServiceCollection()
             .AddLogging()
             .BuildServiceProvider();
@@ -68,7 +67,7 @@ public class YelpServiceTests
                 ItExpr.IsAny<HttpRequestMessage>(),
                 ItExpr.IsAny<CancellationToken>()
             )
-            .ReturnsAsync(result)
+            .ReturnsAsync(result)   
             .Verifiable();
 
         var httpClient = new HttpClient(handlerMock.Object) {
