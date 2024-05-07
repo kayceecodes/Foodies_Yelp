@@ -32,8 +32,7 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
-app.UseHttpsRedirection();
-
+app.UseRouting();
 app.ConfigurationRestaurantEndpoints();
 app.ConfigurationReviewEndpoints();
 
