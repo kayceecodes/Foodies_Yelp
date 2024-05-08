@@ -19,14 +19,14 @@ public class YelpServiceTests
     private List<Review> _reviews;
     private ILogger<YelpService> _mockLogger;
     private Mock<IHttpClientFactory> _mockHttpClientFactory;
-    private Mock<IOptions<Yelp>> _mockYelpOptions;
+    private Mock<IOptions<YelpOptions>> _mockYelpOptions;
 
     [SetUp]
     public void Setup()
     {
         CreateBusinesses();
         CreateReviews();
-        _mockYelpOptions = new Mock<IOptions<Yelp>>();
+        _mockYelpOptions = new Mock<IOptions<YelpOptions>>();
        
         var serviceProvider = new ServiceCollection()
             .AddLogging()
@@ -34,7 +34,7 @@ public class YelpServiceTests
         var factory = serviceProvider.GetService<ILoggerFactory>();
         _mockLogger = factory.CreateLogger<YelpService>();
 
-        _mockYelpOptions.Setup(m => m.Value).Returns(new Yelp { Key = "Test Key" });
+        _mockYelpOptions.Setup(m => m.Value).Returns(new YelpOptions { Key = "Test Key" });
     }
 
     private void CreateMockHttpClient(HttpStatusCode statusCode, YelpResponse yelpResponse = null!)
