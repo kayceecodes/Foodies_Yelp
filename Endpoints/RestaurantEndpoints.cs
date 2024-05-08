@@ -23,7 +23,7 @@ public static class RestaurantEndpoints
                 return TypedResults.Ok(mapped);
             }
                 
-            return TypedResults.BadRequest();
+            return TypedResults.BadRequest(result.ErrorMessages);
 
         }).WithName("GetRestaurantByNameAndLocation").Accepts<string>("application/json")
         .Produces<APIResult<List<Business>>>(StatusCodes.Status200OK)
@@ -57,7 +57,7 @@ public static class RestaurantEndpoints
                 return TypedResults.Ok(mapped);
             }
                 
-            return TypedResults.BadRequest();
+            return TypedResults.BadRequest(result.ErrorMessages);
 
         
         }).WithName("GetRestaurantByLocation").Accepts<string>("application/json")
@@ -75,7 +75,7 @@ public static class RestaurantEndpoints
                 return TypedResults.Ok(result.Data);
             }
 
-            return TypedResults.BadRequest();
+            return TypedResults.BadRequest(result.ErrorMessages);
         
         }).WithName("GetRestaurantByPhone").Accepts<string>("application/json")
         .Produces<APIResult<Business>>(StatusCodes.Status200OK)
@@ -93,7 +93,7 @@ public static class RestaurantEndpoints
                 return TypedResults.Ok(mapped);
             }
                 
-            return TypedResults.BadRequest();
+            return TypedResults.BadRequest(result.ErrorMessages);
 
         
         }).WithName("GetRestaurantsBySearchTerms").Accepts<SearchDto>("application/json")

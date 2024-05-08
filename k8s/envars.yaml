@@ -9,7 +9,5 @@ spec:
   - name: envar-foodiesyelp-container
     image: kayceecode/foodiesyelp
     env:
-    - name: YELP_API_KEY
-      value: "Hello from the environment"
-    - name: DEMO_FAREWELL
-      value: "Such a sweet sorrow"
+    - name: KEY
+      value: "CSiguMJNp2BL4tZcudgNueu6CPRy-lax1Zltio523c0ecnCmbdL0LIlAdfMeMntl85UOQoYCyJ8kJvRSGu2X_LvqBGLbcZSaT6yihQXsLV-MOPWJWvI_z8cUeJdTYnYx"
