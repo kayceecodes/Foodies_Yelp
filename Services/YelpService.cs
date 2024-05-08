@@ -13,12 +13,12 @@ public class YelpService : IYelpService
 {
     private ILogger<YelpService> _logger; 
     private IHttpClientFactory _httpClientFactory;
-    private Yelp _yelp;
-    public YelpService(ILogger<YelpService> logger, IHttpClientFactory httpClientFactory, IOptions<Yelp> yelpOptions)
+    private YelpOptions _yelpOptions;
+    public YelpService(ILogger<YelpService> logger, IHttpClientFactory httpClientFactory, IOptions<YelpOptions> yelpOptions)
     {
         _logger = logger;
         _httpClientFactory = httpClientFactory;
-        _yelp = yelpOptions.Value;
+        _yelpOptions = yelpOptions.Value;
     }
 
     public HttpClient CreateClient() 
@@ -26,7 +26,7 @@ public class YelpService : IYelpService
         // var token = _configuration.GetValue<string>(YelpConstants.ApiKeyName);
         var client = _httpClientFactory.CreateClient("YelpService");
         try {
-            var token = _yelp.Key;
+            var token = _yelpOptions.Key;
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
         catch(Exception ex) {

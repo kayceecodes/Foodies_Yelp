@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: envar
+  labels:
+    purpose: set-envars
+spec:
+  containers:
+  - name: envar-foodiesyelp-container
+    image: kayceecode/foodiesyelp
+    env:
+    - name: YELP_API_KEY
+      value: "Hello from the environment"
+    - name: DEMO_FAREWELL
+      value: "Such a sweet sorrow"

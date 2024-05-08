@@ -20,7 +20,7 @@ builder.Services.AddHttpClient("YelpService", client =>
 {
     client.BaseAddress = new Uri(configuration.GetValue<string>(YelpConstants.BaseAddress));    
 });
-builder.Services.Configure<Yelp>(builder.Configuration.GetSection(YelpConstants.SectionName));
+builder.Services.Configure<YelpOptions>(builder.Configuration.GetSection(YelpConstants.SectionName));
 
 // Add YelpService as a singleton with configuration
 builder.Services.AddSingleton<YelpService>();

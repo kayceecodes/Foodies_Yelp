@@ -6,15 +6,15 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: foodiesyelp-depl
+      app: foodiesyelp
   template:
     metadata:
       labels:
-        app: foodiesyelp-depl
+        app: foodiesyelp
     spec:
       containers:
-        - name: foodiesyelp-depl
-          image: kayceecode/foodiesyelp
+        - name: foodiesyelp
+          image: kayceecode/foodiesyelp:latest
 ---
 apiVersion: v1
 kind: Service
