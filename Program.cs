@@ -32,6 +32,7 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
+app.ConfigurationHealthCheckEndpoints();
 app.ConfigurationRestaurantEndpoints();
 app.ConfigurationReviewEndpoints();
 
