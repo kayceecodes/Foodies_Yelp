@@ -34,7 +34,7 @@ public class YelpServiceTests
         var factory = serviceProvider.GetService<ILoggerFactory>();
         _mockLogger = factory.CreateLogger<YelpService>();
 
-        _mockYelpOptions.Setup(m => m.Value).Returns(new YelpOptions { Key = "Test Key" });
+        _mockYelpOptions.Setup(m => m.Value).Returns(new YelpOptions { ApiKey = "Test Key" });
     }
 
     private void CreateMockHttpClient(HttpStatusCode statusCode, YelpResponse yelpResponse = null!)

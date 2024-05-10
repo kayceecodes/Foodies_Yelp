@@ -26,7 +26,7 @@ public class YelpService : IYelpService
         // var token = _configuration.GetValue<string>(YelpConstants.ApiKeyName);
         var client = _httpClientFactory.CreateClient("YelpService");
         try {
-            var token = _yelpOptions.Key;
+            var token = _yelpOptions.ApiKey;
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
         catch(Exception ex) {
