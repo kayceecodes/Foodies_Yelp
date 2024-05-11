@@ -47,7 +47,7 @@ public class YelpService : IYelpService
         if (result.IsSuccessStatusCode)
             return APIResult<Business>.Pass(business);
         else
-            return APIResult<Business>.Fail("Problem getting bussiness", result.StatusCode);
+            return APIResult<Business>.Fail($"Problem getting bussiness using Id: {id}", result.StatusCode);
     }
 
     public async Task<APIResult<List<Business>>> GetBusinessesByName(string name, string location)
@@ -68,7 +68,7 @@ public class YelpService : IYelpService
         if (result.IsSuccessStatusCode)
             return APIResult<List<Business>>.Pass(businesses);
         else
-            return APIResult<List<Business>>.Fail("Problem getting bussinesses", result.StatusCode);
+            return APIResult<List<Business>>.Fail($"Problem getting bussinesses using name: {name}, location: {location}", result.StatusCode);
     }
 
     public async Task<APIResult<List<Business>>> GetBusinessesByLocation(string location)
@@ -83,7 +83,7 @@ public class YelpService : IYelpService
         if (result.IsSuccessStatusCode)
             return APIResult<List<Business>>.Pass(businesses);
         else
-            return APIResult<List<Business>>.Fail("Problem getting bussinesses", result.StatusCode);
+            return APIResult<List<Business>>.Fail($"Problem getting bussinesses using location: {location}", result.StatusCode);
     }
 
     public async virtual Task<APIResult<Business>> GetBusinessByPhone(string number)
@@ -98,7 +98,7 @@ public class YelpService : IYelpService
         if (result.IsSuccessStatusCode)
             return APIResult<Business>.Pass(business);
         else
-            return APIResult<Business>.Fail("Problem getting bussiness", result.StatusCode);
+            return APIResult<Business>.Fail($"Problem getting bussiness using phone number: {number}", result.StatusCode);
     }
 
     public async virtual Task<APIResult<List<Business>>> GetBusinessesByKeywords(SearchDto dto)
@@ -126,7 +126,7 @@ public class YelpService : IYelpService
         if (result.IsSuccessStatusCode)
             return APIResult<List<Business>>.Pass(businesses);
         else
-            return APIResult<List<Business>>.Fail("Problem getting bussinesses", result.StatusCode);
+            return APIResult<List<Business>>.Fail("Problem getting bussinesses by Keywords", result.StatusCode);
     }
 
     public async Task<APIResult<List<Review>>> GetReviewsById(string id)
@@ -141,6 +141,6 @@ public class YelpService : IYelpService
         if (result.IsSuccessStatusCode)
             return APIResult<List<Review>>.Pass(reviews);
         else
-            return APIResult<List<Review>>.Fail("Problem getting bussiness", result.StatusCode);
+            return APIResult<List<Review>>.Fail($"Problem getting Reviews by Id: {id}", result.StatusCode);
     }
 }
