@@ -28,6 +28,8 @@ public class YelpService : IYelpService
         try {
             var token = _yelpOptions.ApiKey;
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            int charCount = token.Length;
+            _logger.LogInformation($"Character count {charCount}");
         }
         catch(Exception ex) {
             _logger.LogError(ex, "API token is missing.");
