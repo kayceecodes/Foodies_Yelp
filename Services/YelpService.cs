@@ -13,7 +13,7 @@ public class YelpService : IYelpService
 {
     private ILogger<YelpService> _logger; 
     private IHttpClientFactory _httpClientFactory;
-    private YelpOptions _yelpOptions;
+    private readonly YelpOptions _yelpOptions;
     public YelpService(ILogger<YelpService> logger, IHttpClientFactory httpClientFactory, IOptions<YelpOptions> yelpOptions)
     {
         _logger = logger;
@@ -49,7 +49,7 @@ public class YelpService : IYelpService
         if (result.IsSuccessStatusCode)
             return APIResult<Business>.Pass(business);
         else
-            return APIResult<Business>.Fail($"Problem getting bussiness using Id: {id}", result.StatusCode);
+            return APIResult<Business>.Fail($"Problem getting bussiness using Id: {id}, Char Count {_yelpOptions.ApiKey.Length}", result.StatusCode);
     }
 
     public async Task<APIResult<List<Business>>> GetBusinessesByName(string name, string location)
