@@ -4,8 +4,6 @@ using foodies_yelp.Models.Dtos.Requests;
 using foodies_yelp.Models.Dtos.Responses;
 using foodies_yelp.Models.Dtos.Responses.Yelp;
 using Microsoft.IdentityModel.Tokens;
-using foodies_yelp.Models.Options;
-using Microsoft.Extensions.Options;
 
 namespace foodies_yelp.Services;
 
@@ -13,23 +11,22 @@ public class YelpService : IYelpService
 {
     private ILogger<YelpService> _logger; 
     private IHttpClientFactory _httpClientFactory;
-    private readonly YelpOptions _yelpOptions;
-    public YelpService(ILogger<YelpService> logger, IHttpClientFactory httpClientFactory, IOptions<YelpOptions> yelpOptions)
+    private readonly IConfiguration _configuration;
+
+    public YelpService(ILogger<YelpService> logger, IHttpClientFactory httpClientFactory, IConfiguration configuration)
     {
         _logger = logger;
         _httpClientFactory = httpClientFactory;
-        _yelpOptions = yelpOptions.Value;
+        _configuration = configuration;
     }
 
     public HttpClient CreateClient() 
     {
-        // var token = _configuration.GetValue<string>(YelpConstants.ApiKeyName);
         var client = _httpClientFactory.CreateClient("YelpService");
+        
         try {
-            var token = _yelpOptions.ApiKey;
+            var token = _configuration[YelpConstants.ApiKeyName];
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            int charCount = token.Length;
-            _logger.LogInformation($"Character count {charCount}");
         }
         catch(Exception ex) {
             _logger.LogError(ex, "API token is missing.");
@@ -49,7 +46,7 @@ public class YelpService : IYelpService
         if (result.IsSuccessStatusCode)
             return APIResult<Business>.Pass(business);
         else
-            return APIResult<Business>.Fail($"Problem getting bussiness using Id: {id}, Char Count {_yelpOptions.ApiKey.Length}", result.StatusCode);
+            return APIResult<Business>.Fail($"Problem getting bussiness using Id: {id}", result.StatusCode);
     }
 
     public async Task<APIResult<List<Business>>> GetBusinessesByName(string name, string location)

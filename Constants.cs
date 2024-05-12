@@ -8,7 +8,6 @@ public static class AuthConstants
 
 public static class YelpConstants
 {
-    public const string SectionName = "Yelp";
-    public const string ApiKeyName = "Yelp:Key";
-    public const string BaseAddress = "Yelp:BaseAddress";
+    public const string ApiKeyName = "YELP_API_KEY";
+    public const string BaseAddress = "BaseAddress";
 }

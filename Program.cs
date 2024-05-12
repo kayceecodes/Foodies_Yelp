@@ -3,10 +3,7 @@ using foodies_yelp.Data;
 using foodies_yelp.Endpoints;
 using foodies_yelp.Services;
 using Microsoft.EntityFrameworkCore;
-using foodies_yelp.Models.Options;
 using foodies_yelp.Profiles.RestaurantProfile;
-using Microsoft.AspNetCore.Hosting;
-using AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 var httpContextAccessor = new HttpContextAccessor();
@@ -21,13 +18,6 @@ builder.Services.AddHttpClient("YelpService", client =>
 {
     client.BaseAddress = new Uri(configuration.GetValue<string>(YelpConstants.BaseAddress));    
 });
-
-// var env = Microsoft.AspNetCore.E.HostingEnvironmentExtensions.GetEnvironment();
-var isProd = Microsoft.AspNetCore.Hosting.HostingEnvironmentExtensions.IsProduction;
-
-builder.Services.Configure<YelpOptions>(builder.Configuration.GetSection(
-    isProd ? YelpConstants.ApiKeyName : YelpConstants.SectionName
-    ));
 
 // Add YelpService as a singleton with configuration
 builder.Services.AddSingleton<YelpService>();
