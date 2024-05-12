@@ -3,7 +3,7 @@ using Moq;
 using Moq.Protected;
 using foodies_yelp.Models.Dtos.Responses.Yelp;
 using foodies_yelp.Models.Dtos.Requests;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Configuration;
 using foodies_yelp.Models.Options;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,14 +19,14 @@ public class YelpServiceTests
     private List<Review> _reviews;
     private ILogger<YelpService> _mockLogger;
     private Mock<IHttpClientFactory> _mockHttpClientFactory;
-    private Mock<IOptions<YelpOptions>> _mockYelpOptions;
+    private Mock<IConfiguration> _mockConfiguration;
 
     [SetUp]
     public void Setup()
     {
         CreateBusinesses();
         CreateReviews();
-        _mockYelpOptions = new Mock<IOptions<YelpOptions>>();
+        _mockConfiguration = new Mock<IConfiguration>();
        
         var serviceProvider = new ServiceCollection()
             .AddLogging()
@@ -34,7 +34,7 @@ public class YelpServiceTests
         var factory = serviceProvider.GetService<ILoggerFactory>();
         _mockLogger = factory.CreateLogger<YelpService>();
 
-        _mockYelpOptions.Setup(m => m.Value).Returns(new YelpOptions { ApiKey = "Test Key" });
+        _mockConfiguration.SetupGet(config => config[It.IsAny<string>()]).Returns("Test API Key");
     }
 
     private void CreateMockHttpClient(HttpStatusCode statusCode, YelpResponse yelpResponse = null!)
@@ -133,7 +133,7 @@ public class YelpServiceTests
 
     private YelpService CreateYelpService()
     {
-        var service = new YelpService(_mockLogger, _mockHttpClientFactory.Object, _mockYelpOptions.Object);
+        var service = new YelpService(_mockLogger, _mockHttpClientFactory.Object, _mockConfiguration.Object);
         return service;
     }
 
