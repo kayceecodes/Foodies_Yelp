@@ -40,7 +40,7 @@ public static class RestaurantEndpoints
                 return TypedResults.Ok(mapped);
             }
                 
-            return TypedResults.BadRequest();
+            return TypedResults.BadRequest("Error at 'GetBusinessById'");
         
         }).WithName("GetRestaurantById").Accepts<string>("application/json")
         .Produces<APIResult<Business>>(StatusCodes.Status200OK)

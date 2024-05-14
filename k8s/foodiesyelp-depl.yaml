@@ -20,7 +20,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: yelp-api-key
-                key: ApiKey
+                key: API_KEY
 ---
 apiVersion: v1
 kind: Service

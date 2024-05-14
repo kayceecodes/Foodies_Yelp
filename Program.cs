@@ -6,8 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using foodies_yelp.Profiles.RestaurantProfile;
 
 var builder = WebApplication.CreateBuilder(args);
-var httpContextAccessor = new HttpContextAccessor();
-var context = httpContextAccessor.HttpContext;
 
 ConfigurationManager configuration = builder.Configuration;
 
