@@ -12,7 +12,7 @@ public static class RestaurantEndpoints
 {
     public static void ConfigurationRestaurantEndpoints(this WebApplication app) 
     {
-        app.MapGet("/api/restaurant/name/{name}/location/{location}", async Task<IResult> (HttpContext context, [FromServices] IMapper mapper, string name, string location) =>
+        app.MapGet("/api/restaurant/name/{name}/location/{location}", async Task<IResult> ([FromServices] IMapper mapper, string name, string location) =>
         {
             var YelpService = app.Services.GetRequiredService<YelpService>();
             APIResult<List<Business>> result = await YelpService.GetBusinessesByName(name, location);
@@ -29,7 +29,7 @@ public static class RestaurantEndpoints
         .Produces<APIResult<List<Business>>>(StatusCodes.Status200OK)
         .Produces(StatusCodes.Status500InternalServerError);
 
-        app.MapGet("/api/restaurant/{id}", async Task<IResult> (HttpContext context, [FromServices] IMapper mapper, string id) =>
+        app.MapGet("/api/restaurant/{id}", async Task<IResult> ([FromServices] IMapper mapper, string id) =>
         {
             var YelpService = app.Services.GetRequiredService<YelpService>();
             APIResult<Business> result = await YelpService.GetBusinessById(id);
@@ -46,7 +46,7 @@ public static class RestaurantEndpoints
         .Produces<APIResult<Business>>(StatusCodes.Status200OK)
         .Produces(StatusCodes.Status500InternalServerError);
         
-        app.MapGet("/api/restaurant/location/{location}", async Task<IResult> (HttpContext context, [FromServices] IMapper mapper, string location) =>
+        app.MapGet("/api/restaurant/location/{location}", async Task<IResult> ([FromServices] IMapper mapper, string location) =>
         {
             var YelpService = app.Services.GetRequiredService<YelpService>();
             APIResult<List<Business>> result = await YelpService.GetBusinessesByLocation(location);
@@ -64,7 +64,7 @@ public static class RestaurantEndpoints
         .Produces<APIResult<List<Business>>>(StatusCodes.Status200OK)
         .Produces(StatusCodes.Status500InternalServerError);
         
-        app.MapGet("/api/restaurant/phone/{phonenumber}", async Task<IResult> (HttpContext context, [FromServices] IMapper mapper, string phonenumber) =>
+        app.MapGet("/api/restaurant/phone/{phonenumber}", async Task<IResult> ([FromServices] IMapper mapper, string phonenumber) =>
         {
             var YelpService = app.Services.GetRequiredService<YelpService>();
             APIResult<Business> result = await YelpService.GetBusinessByPhone(phonenumber);
@@ -82,7 +82,7 @@ public static class RestaurantEndpoints
         .Produces(StatusCodes.Status500InternalServerError);
 
         // Uses Search object with propeerties used in Yelp's API
-        app.MapPost("/api/restaurant/search/", async Task<IResult> (HttpContext context, [FromServices] IMapper mapper, [FromBody] SearchDto search) =>
+        app.MapPost("/api/restaurant/search/", async Task<IResult> ([FromServices] IMapper mapper, [FromBody] SearchDto search) =>
         {
             var YelpService = app.Services.GetRequiredService<YelpService>();
             APIResult<List<Business>> result = await YelpService.GetBusinessesByKeywords(search);
