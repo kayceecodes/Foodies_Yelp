@@ -9,7 +9,7 @@ public static class ReviewEndpionts
 {
     public static void ConfigurationReviewEndpoints(this WebApplication app) 
     {
-        app.MapGet("/api/restaurant/{id}/reviews/", async Task<IResult> (HttpContext context, [FromServices] IMapper mapper, string id) =>
+        app.MapGet("/api/restaurant/{id}/reviews/", async Task<IResult> ([FromServices] IMapper mapper, string id) =>
         {
             var YelpService = app.Services.GetRequiredService<YelpService>();
             var result = await YelpService.GetReviewsById(id);
