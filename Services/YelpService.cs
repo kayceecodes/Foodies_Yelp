@@ -73,7 +73,7 @@ public class YelpService : IYelpService
     public async Task<APIResult<List<Business>>> GetBusinessesByLocation(string location)
     {
         HttpClient client = CreateClient();
-        string url = client.BaseAddress + $"/businesses/search?term=restaurant&sort_by=best_match&limit=20&location={location}";
+        string url = client.BaseAddress + $"/businesses/search?term=food&sort_by=best_match&limit=20&location={location}";
 
         HttpResponseMessage result = await client.GetAsync(url);
         var yelpResponse = JsonConvert.DeserializeObject<YelpResponse>(await result.Content.ReadAsStringAsync());
