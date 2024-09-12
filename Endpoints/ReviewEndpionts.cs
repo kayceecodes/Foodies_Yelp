@@ -32,11 +32,10 @@ public static class ReviewEndpionts
                                         Url = review.Url
                                     }).ToList();
 
-
                 return TypedResults.Ok(mapped);
             }
                 
-            return TypedResults.BadRequest();
+          return TypedResults.BadRequest();
         
         }).WithName("GetReviewById").Accepts<string>("application/json")
         .Produces<List<Review>>(StatusCodes.Status200OK)
