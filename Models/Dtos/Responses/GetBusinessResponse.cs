@@ -4,6 +4,7 @@ namespace foodies_yelp;
 
 public class GetBusinessResponse
 {
+    public string Id { get; set; }
     public string Alias { get; set; } = string.Empty;
     public string Name { get; set; } = string.Empty;
     public string URL { get; set; } = string.Empty;

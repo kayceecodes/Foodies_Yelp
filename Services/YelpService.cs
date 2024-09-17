@@ -4,6 +4,7 @@ using foodies_yelp.Models.Dtos.Requests;
 using foodies_yelp.Models.Dtos.Responses;
 using foodies_yelp.Models.Dtos.Responses.Yelp;
 using Microsoft.IdentityModel.Tokens;
+using System.Text.RegularExpressions;
 
 namespace foodies_yelp.Services;
 
@@ -20,18 +21,35 @@ public class YelpService : IYelpService
         _configuration = configuration;
     }
 
+    private bool IsPlaceHolderString(string token)
+    {
+        string pattern = @"(API|SECRET|TOKEN)";
+        
+        Regex regex = new Regex(pattern);
+        MatchCollection matches = regex.Matches(token);
+
+        return matches.Count > 0;
+    }
+
     public HttpClient CreateClient() 
     {
         var client = _httpClientFactory.CreateClient("YelpService");
+        var token = string.Empty;
         
         try {
-            var token = _configuration[YelpConstants.ApiKeyName];
+            token = _configuration[YelpConstants.ApiKeyName];
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
-        catch(Exception ex) {
-            _logger.LogError(ex, "API token is missing.");
+        catch(UnauthorizedAccessException ex) {
+            _logger.LogError(ex, "Cannot reach API token");
+            throw new UnauthorizedAccessException("Cannot reach API token");
         }
         
+        if(token.IsNullOrEmpty() || IsPlaceHolderString(token)) {
+            _logger.LogError("API token is empty or is a placeholder");
+            throw new UnauthorizedAccessException("API token is empty or is a placeholder");
+        }
+
         return client;
     }
 
@@ -55,10 +73,10 @@ public class YelpService : IYelpService
         string url = client.BaseAddress + $"/businesses/search?sort_by=best_match&limit=10&term={name}&location={location}";
 
         if(name.IsNullOrEmpty())
-            throw new Exception("Name is missing");
+            throw new Exception("Name is missing in method YelpService.GetBusinessesByName");
 
         if(location.IsNullOrEmpty())
-            throw new Exception("Location is missing");
+            throw new Exception("Location is missing in method YelpService.GetBusinessesByName");
 
         HttpResponseMessage result = await client.GetAsync(url);
         var yelpResponse = JsonConvert.DeserializeObject<YelpResponse>(await result.Content.ReadAsStringAsync());

@@ -12,7 +12,7 @@ public static class BusinessEndpoints
 {
     public static void ConfigurationBusinessEndpoints(this WebApplication app) 
     {
-        app.MapGet("/api/business/name/{name}/location/{location}", async Task<IResult> ([FromServices] IMapper mapper, string name, string location) =>
+        app.MapGet("/api/businesses/name/{name}/location/{location}", async Task<IResult> ([FromServices] IMapper mapper, string name, string location) =>
         {
             var YelpService = app.Services.GetRequiredService<YelpService>();
             APIResult<List<Business>> result = await YelpService.GetBusinessesByName(name, location);
@@ -46,7 +46,7 @@ public static class BusinessEndpoints
         .Produces<APIResult<Business>>(StatusCodes.Status200OK)
         .Produces(StatusCodes.Status500InternalServerError);
         
-        app.MapGet("/api/business/location/{location}", async Task<IResult> ([FromServices] IMapper mapper, string location) =>
+        app.MapGet("/api/businesses/location/{location}", async Task<IResult> ([FromServices] IMapper mapper, string location) =>
         {
             var YelpService = app.Services.GetRequiredService<YelpService>();
             APIResult<List<Business>> result = await YelpService.GetBusinessesByLocation(location);
@@ -64,7 +64,7 @@ public static class BusinessEndpoints
         .Produces<APIResult<List<Business>>>(StatusCodes.Status200OK)
         .Produces(StatusCodes.Status500InternalServerError);
         
-        app.MapGet("/api/business/phone/{phonenumber}", async Task<IResult> ([FromServices] IMapper mapper, string phonenumber) =>
+        app.MapGet("/api/businesses/phone/{phonenumber}", async Task<IResult> ([FromServices] IMapper mapper, string phonenumber) =>
         {
             var YelpService = app.Services.GetRequiredService<YelpService>();
             APIResult<Business> result = await YelpService.GetBusinessByPhone(phonenumber);
@@ -82,7 +82,7 @@ public static class BusinessEndpoints
         .Produces(StatusCodes.Status500InternalServerError);
 
         // Uses Search object with propeerties used in Yelp's API
-        app.MapPost("/api/business/search/", async Task<IResult> ([FromServices] IMapper mapper, [FromBody] SearchDto search) =>
+        app.MapPost("/api/businesses/search/", async Task<IResult> ([FromServices] IMapper mapper, [FromBody] SearchDto search) =>
         {
             var YelpService = app.Services.GetRequiredService<YelpService>();
             APIResult<List<Business>> result = await YelpService.GetBusinessesByKeywords(search);

@@ -8,6 +8,7 @@ public class BusinessProfile : Profile
     public BusinessProfile() 
     {
         CreateMap<Business, GetBusinessResponse>()
+        .ForMember(dest => dest.Id, src => src.MapFrom(x => x.Id))
         .ForMember(dest => dest.StreetAddress, src => src.MapFrom(x => x.Location.Address1))
         .ForMember(dest => dest.City, src => src.MapFrom(x => x.Location.City))
         .ForMember(dest => dest.State, src => src.MapFrom(x => x.Location.State))
