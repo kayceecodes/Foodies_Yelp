@@ -6,10 +6,23 @@ using Microsoft.EntityFrameworkCore;
 using foodies_yelp.Profiles.BusinessProfile;
 
 var builder = WebApplication.CreateBuilder(args);
+const string AllowLocalDevelopment = "AllowLocalDevelopment";
 
 ConfigurationManager configuration = builder.Configuration;
 
 builder.Services.AddAutoMapper(typeof(BusinessProfile), typeof(ReviewProfile));
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: AllowLocalDevelopment,
+                      policy  =>
+                      {
+                          policy.WithOrigins("http://localhost:3000",
+                                              "http://localhost:3001")
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+                      });
+});
 
 // Configure services
 builder.Services.AddHttpClient("YelpService", client => 
@@ -26,6 +39,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
+
+app.UseCors(AllowLocalDevelopment);
 
 app.ConfigurationHealthCheckEndpoints();
 app.ConfigurationBusinessEndpoints();
