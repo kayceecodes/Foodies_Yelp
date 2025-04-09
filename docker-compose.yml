@@ -1,0 +1,12 @@
+#      - ConnectionStrings__DefaultConnection=User ID=postgres;Password=postgres;Server=app_db;Port=5432;Database=FoodiesApiDb; IntegratedSecurity=true;Pooling=true;
+services:
+   fooodies-yelp:
+     image: keith/foodies-yelp
+     container_name: foodies-yelp-container
+     environment:
+       - ASPNETCORE_ENVIRONMENT=Production
+       - ASPNETCORE_HOST_PORTS=80 
+       - YELP_API_KEY=CSiguMJNp2BL4tZcudgNueu6CPRy-lax1Zltio523c0ecnCmbdL0LIlAdfMeMntl85UOQoYCyJ8kJvRSGu2X_LvqBGLbcZSaT6yihQXsLV-MOPWJWvI_z8cUeJdTYnYx
+     ports:
+       - "8080:80"
+     restart: always

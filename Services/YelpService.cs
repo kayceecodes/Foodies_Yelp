@@ -37,7 +37,7 @@ public class YelpService : IYelpService
         var token = string.Empty;
         
         try {
-            token = _configuration[YelpConstants.ApiKeyName];
+            token = _configuration["YELP_API_KEY"];
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
         catch(UnauthorizedAccessException ex) {
@@ -85,7 +85,7 @@ public class YelpService : IYelpService
         if (result.IsSuccessStatusCode)
             return APIResult<List<Business>>.Pass(businesses);
         else
-            return APIResult<List<Business>>.Fail($"Problem getting bussinesses using name: {name}, location: {location}", result.StatusCode);
+           return APIResult<List<Business>>.Fail($"Problem getting bussinesses using name: {name}, location: {location}", result.StatusCode);
     }
 
     public async Task<APIResult<List<Business>>> GetBusinessesByLocation(string location)
