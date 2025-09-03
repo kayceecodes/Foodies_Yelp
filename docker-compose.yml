@@ -1,12 +1,20 @@
 #      - ConnectionStrings__DefaultConnection=User ID=postgres;Password=postgres;Server=app_db;Port=5432;Database=FoodiesApiDb; IntegratedSecurity=true;Pooling=true;
 services:
-   fooodies-yelp:
-     image: keith/foodies-yelp
+   foodies-yelp:
+     image: kayceecode/foodies-yelp
      container_name: foodies-yelp-container
      environment:
        - ASPNETCORE_ENVIRONMENT=Production
-       - ASPNETCORE_HOST_PORTS=80 
-       - YELP_API_KEY=CSiguMJNp2BL4tZcudgNueu6CPRy-lax1Zltio523c0ecnCmbdL0LIlAdfMeMntl85UOQoYCyJ8kJvRSGu2X_LvqBGLbcZSaT6yihQXsLV-MOPWJWvI_z8cUeJdTYnYx
+       - ASPNETCORE_URLS=http://0.0.0.0:8080 
+       - YELP_API_KEY=/run/secrets/yelp-api-key
+       #- YELP_API_KEY=CSiguMJNp2BL4tZcudgNueu6CPRy-lax1Zltio523c0ecnCmbdL0LIlAdfMeMntl85UOQoYCyJ8kJvRSGu2X_LvqBGLbcZSaT6yihQXsLV-MOPWJWvI_z8cUeJdTYnYx
+       - BaseAddress=https://api.yelp.com/v3
      ports:
-       - "8080:80"
+       - "8083:8080"
+     secrets:
+       - yelp-api-key
      restart: always
+
+secrets:
+  yelp-api-key:
+    file: ./secrets/yelp-api-key.txt

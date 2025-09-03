@@ -34,20 +34,26 @@ public class YelpService : IYelpService
     public HttpClient CreateClient() 
     {
         var client = _httpClientFactory.CreateClient("YelpService");
-        var token = string.Empty;
+        var apiKey = string.Empty;
         
         try {
-            token = _configuration["YELP_API_KEY"];
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            if (File.Exists("/run/secrets/yelp-api-key"))
+                apiKey = File.ReadAllText("/run/secrets/yelp-api-key").Trim();
+            else
+                apiKey = _configuration["YELP_API_KEY"];
+
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
         }
-        catch(UnauthorizedAccessException ex) {
-            _logger.LogError(ex, "Cannot reach API token");
-            throw new UnauthorizedAccessException("Cannot reach API token");
+        catch(UnauthorizedAccessException ex)
+        {
+            _logger.LogError(ex, "Cannot reach API Key");
+            throw new UnauthorizedAccessException("Cannot reach API Key");
         }
         
-        if(token.IsNullOrEmpty() || IsPlaceHolderString(token)) {
-            _logger.LogError("API token is empty or is a placeholder");
-            throw new UnauthorizedAccessException("API token is empty or is a placeholder");
+        if(apiKey.IsNullOrEmpty())
+        {
+            _logger.LogError("API Key is empty");
+            throw new UnauthorizedAccessException("API Key is empty");
         }
 
         return client;
