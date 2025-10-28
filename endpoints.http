@@ -1,0 +1,7 @@
+@baseUrl = http://localhost:5155
+
+@keywords = "coffee shop"
+POST {{baseUrl}}/api/businesses/search/{{keywords}}
+
+### Healthcheck Endpoint
+GET {{baseUrl}}/api/healthcheck/

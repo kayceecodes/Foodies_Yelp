@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ESu4hREIzUk=",
+  "dgSpecHash": "lyrVd1ygOk8=",
   "success": true,
   "projectFilePath": "/home/kaycee/repos/foodies/foodies_yelp/foodies_yelp.tests/foodies_yelp.tests.csproj",
   "expectedPackageFiles": [
@@ -58,8 +58,7 @@
     "/home/kaycee/.nuget/packages/system.reflection.metadata/1.6.0/system.reflection.metadata.1.6.0.nupkg.sha512",
     "/home/kaycee/.nuget/packages/system.text.encodings.web/7.0.0/system.text.encodings.web.7.0.0.nupkg.sha512",
     "/home/kaycee/.nuget/packages/system.text.json/7.0.2/system.text.json.7.0.2.nupkg.sha512",
-    "/home/kaycee/.nuget/packages/microsoft.netcore.app.ref/8.0.15/microsoft.netcore.app.ref.8.0.15.nupkg.sha512",
-    "/home/kaycee/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.15/microsoft.aspnetcore.app.ref.8.0.15.nupkg.sha512"
+    "/home/kaycee/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.20/microsoft.aspnetcore.app.ref.8.0.20.nupkg.sha512"
   ],
   "logs": []
 }

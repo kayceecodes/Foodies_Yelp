@@ -124,7 +124,7 @@ public class YelpService : IYelpService
             return APIResult<Business>.Fail($"Problem getting bussiness using phone number: {number}", result.StatusCode);
     }
 
-    public async virtual Task<APIResult<List<Business>>> GetBusinessesByKeywords(SearchDto dto)
+    public async virtual Task<APIResult<List<Business>>> GetBusinessesByKeywords(string keywords)
     {
         string terms = "food, dinner, restaurant";
         
