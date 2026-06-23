@@ -201,7 +201,7 @@ public class YelpServiceTests
             Location = "Test Location",
             Lat = "0",
             Long = "0",
-            Terms = ["test", "term"],        
+            Keywords = ["test", "term"],        
         };
         var response = service.GetBusinessesByKeywords(searchDto);
         var lastBusiness = response.Result.Data.Last();

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("foodies_yelp.tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+32766745c8ac1910aa44a044d1a375233e39ddd7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ae3d2847a36e23fb2468be8e76740459138e407b")]
 [assembly: System.Reflection.AssemblyProductAttribute("foodies_yelp.tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("foodies_yelp.tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

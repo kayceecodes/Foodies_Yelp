@@ -1,12 +1,23 @@
-﻿namespace foodies_yelp.Models.Dtos.Requests;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace foodies_yelp.Models.Dtos.Requests;
 
 public class SearchDto
 {
-    public string Category { get; set; }
-    public string Location { get; set; }
-    public string Lat { get; set; }
-    public string Long { get; set; }
-    public string Name { get; set; }
-    public List<string> Terms { get; set; } 
+    [Required]
+    public string? Category { get; set; }
+
+    [Required]
+    public double Lat { get; set; }
+
+    [Required]
+    public double Long { get; set; }
+    
+    [Range(0, 8047)]
+    public int? RadiusMeters { get; set; } // Yelp API has its own default range, it's business-population based
+
+    [Required]
+    public List<string>? Keywords { get; set; } 
+
     public int Limit { get; set; }
 }
