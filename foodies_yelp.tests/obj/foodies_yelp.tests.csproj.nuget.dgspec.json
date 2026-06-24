@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/kaycee/repos/foodies/Foodies_Yelp/foodies_yelp.tests/foodies_yelp.tests.csproj": {}
+    "/home/kaycee/repos/foodies/foodies_yelp/foodies_yelp.tests/foodies_yelp.tests.csproj": {}
   },
   "projects": {
-    "/home/kaycee/repos/foodies/Foodies_Yelp/foodies_yelp.csproj": {
+    "/home/kaycee/repos/foodies/foodies_yelp/foodies_yelp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/kaycee/repos/foodies/Foodies_Yelp/foodies_yelp.csproj",
+        "projectUniqueName": "/home/kaycee/repos/foodies/foodies_yelp/foodies_yelp.csproj",
         "projectName": "foodies_yelp",
-        "projectPath": "/home/kaycee/repos/foodies/Foodies_Yelp/foodies_yelp.csproj",
+        "projectPath": "/home/kaycee/repos/foodies/foodies_yelp/foodies_yelp.csproj",
         "packagesPath": "/home/kaycee/.nuget/packages/",
-        "outputPath": "/home/kaycee/repos/foodies/Foodies_Yelp/obj/",
+        "outputPath": "/home/kaycee/repos/foodies/foodies_yelp/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/kaycee/.nuget/NuGet/NuGet.Config"
@@ -404,14 +404,14 @@
         }
       }
     },
-    "/home/kaycee/repos/foodies/Foodies_Yelp/foodies_yelp.tests/foodies_yelp.tests.csproj": {
+    "/home/kaycee/repos/foodies/foodies_yelp/foodies_yelp.tests/foodies_yelp.tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/kaycee/repos/foodies/Foodies_Yelp/foodies_yelp.tests/foodies_yelp.tests.csproj",
+        "projectUniqueName": "/home/kaycee/repos/foodies/foodies_yelp/foodies_yelp.tests/foodies_yelp.tests.csproj",
         "projectName": "foodies_yelp.tests",
-        "projectPath": "/home/kaycee/repos/foodies/Foodies_Yelp/foodies_yelp.tests/foodies_yelp.tests.csproj",
+        "projectPath": "/home/kaycee/repos/foodies/foodies_yelp/foodies_yelp.tests/foodies_yelp.tests.csproj",
         "packagesPath": "/home/kaycee/.nuget/packages/",
-        "outputPath": "/home/kaycee/repos/foodies/Foodies_Yelp/foodies_yelp.tests/obj/",
+        "outputPath": "/home/kaycee/repos/foodies/foodies_yelp/foodies_yelp.tests/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/kaycee/.nuget/NuGet/NuGet.Config"
@@ -426,8 +426,8 @@
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "/home/kaycee/repos/foodies/Foodies_Yelp/foodies_yelp.csproj": {
-                "projectPath": "/home/kaycee/repos/foodies/Foodies_Yelp/foodies_yelp.csproj"
+              "/home/kaycee/repos/foodies/foodies_yelp/foodies_yelp.csproj": {
+                "projectPath": "/home/kaycee/repos/foodies/foodies_yelp/foodies_yelp.csproj"
               }
             }
           }

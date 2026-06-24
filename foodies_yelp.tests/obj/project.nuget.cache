@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "z8HmcPLXEdE=",
+  "dgSpecHash": "zzy6iV9xNAg=",
   "success": true,
-  "projectFilePath": "/home/kaycee/repos/foodies/Foodies_Yelp/foodies_yelp.tests/foodies_yelp.tests.csproj",
+  "projectFilePath": "/home/kaycee/repos/foodies/foodies_yelp/foodies_yelp.tests/foodies_yelp.tests.csproj",
   "expectedPackageFiles": [
     "/home/kaycee/.nuget/packages/automapper/13.0.1/automapper.13.0.1.nupkg.sha512",
     "/home/kaycee/.nuget/packages/castle.core/5.1.1/castle.core.5.1.1.nupkg.sha512",
@@ -62,9 +62,9 @@
       "code": "NU1903",
       "level": "Warning",
       "message": "Package 'AutoMapper' 13.0.1 has a known high severity vulnerability, https://github.com/advisories/GHSA-rvv3-g6hj-g44x",
-      "projectPath": "/home/kaycee/repos/foodies/Foodies_Yelp/foodies_yelp.tests/foodies_yelp.tests.csproj",
+      "projectPath": "/home/kaycee/repos/foodies/foodies_yelp/foodies_yelp.tests/foodies_yelp.tests.csproj",
       "warningLevel": 1,
-      "filePath": "/home/kaycee/repos/foodies/Foodies_Yelp/foodies_yelp.tests/foodies_yelp.tests.csproj",
+      "filePath": "/home/kaycee/repos/foodies/foodies_yelp/foodies_yelp.tests/foodies_yelp.tests.csproj",
       "libraryId": "AutoMapper",
       "targetGraphs": [
         "net10.0"
@@ -74,9 +74,9 @@
       "code": "NU1903",
       "level": "Warning",
       "message": "Package 'Microsoft.Extensions.Caching.Memory' 8.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-qj66-m88j-hmgj",
-      "projectPath": "/home/kaycee/repos/foodies/Foodies_Yelp/foodies_yelp.tests/foodies_yelp.tests.csproj",
+      "projectPath": "/home/kaycee/repos/foodies/foodies_yelp/foodies_yelp.tests/foodies_yelp.tests.csproj",
       "warningLevel": 1,
-      "filePath": "/home/kaycee/repos/foodies/Foodies_Yelp/foodies_yelp.tests/foodies_yelp.tests.csproj",
+      "filePath": "/home/kaycee/repos/foodies/foodies_yelp/foodies_yelp.tests/foodies_yelp.tests.csproj",
       "libraryId": "Microsoft.Extensions.Caching.Memory",
       "targetGraphs": [
         "net10.0"
@@ -86,9 +86,9 @@
       "code": "NU1903",
       "level": "Warning",
       "message": "Package 'Npgsql' 8.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-x9vc-6hfv-hg8c",
-      "projectPath": "/home/kaycee/repos/foodies/Foodies_Yelp/foodies_yelp.tests/foodies_yelp.tests.csproj",
+      "projectPath": "/home/kaycee/repos/foodies/foodies_yelp/foodies_yelp.tests/foodies_yelp.tests.csproj",
       "warningLevel": 1,
-      "filePath": "/home/kaycee/repos/foodies/Foodies_Yelp/foodies_yelp.tests/foodies_yelp.tests.csproj",
+      "filePath": "/home/kaycee/repos/foodies/foodies_yelp/foodies_yelp.tests/foodies_yelp.tests.csproj",
       "libraryId": "Npgsql",
       "targetGraphs": [
         "net10.0"
@@ -98,9 +98,9 @@
       "code": "NU1902",
       "level": "Warning",
       "message": "Package 'RestSharp' 110.2.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-4rr6-2v9v-wcpc",
-      "projectPath": "/home/kaycee/repos/foodies/Foodies_Yelp/foodies_yelp.tests/foodies_yelp.tests.csproj",
+      "projectPath": "/home/kaycee/repos/foodies/foodies_yelp/foodies_yelp.tests/foodies_yelp.tests.csproj",
       "warningLevel": 1,
-      "filePath": "/home/kaycee/repos/foodies/Foodies_Yelp/foodies_yelp.tests/foodies_yelp.tests.csproj",
+      "filePath": "/home/kaycee/repos/foodies/foodies_yelp/foodies_yelp.tests/foodies_yelp.tests.csproj",
       "libraryId": "RestSharp",
       "targetGraphs": [
         "net10.0"
