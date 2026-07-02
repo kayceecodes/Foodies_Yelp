@@ -32,8 +32,26 @@ x86/
 bld/
 [Bb]in/
 [Oo]bj/
+foodies_yelp.tests/[Oo]bj/
 [Ll]og/
 [Ll]ogs/
+
+# Build results
+foodies_yelp.tests/[Dd]ebug/
+foodies_yelp.tests/[Dd]ebugPublic/
+foodies_yelp.tests/[Rr]elease/
+foodies_yelp.tests/[Rr]eleases/
+foodies_yelp.tests/x64/
+foodies_yelp.tests/x86/
+foodies_yelp.tests/[Ww][Ii][Nn]32/
+foodies_yelp.tests/[Aa][Rr][Mm]/
+foodies_yelp.tests/[Aa][Rr][Mm]64/
+foodies_yelp.tests/bld/
+foodies_yelp.tests/[Bb]in/
+foodies_yelp.tests/[Oo]bj/
+foodies_yelp.tests/[Oo]bj/
+foodies_yelp.tests/[Ll]og/
+foodies_yelp.tests/[Ll]ogs/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
