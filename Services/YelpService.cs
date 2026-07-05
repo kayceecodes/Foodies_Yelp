@@ -124,11 +124,11 @@ public class YelpService : IYelpService
             return APIResult<Business>.Fail($"Problem getting bussiness using phone number: {number}", result.StatusCode);
     }
 
-    public async virtual Task<APIResult<List<Business>>> GetBusinessesByKeywords(List<string> keywords, string lat, string lng, string location)
+    public async virtual Task<APIResult<List<Business>>> GetBusinessesByKeywords(SearchRequest request)
     {
         string terms = "food, dinner, restaurant";
         
-        if(keywords.Count > 0)
+        if(request.Terms.Count > 0)
             terms += ", " + string.Join(", ", dto.Terms);    
 
         bool IsMissingCoordinates = dto.Lat.IsNullOrEmpty() || dto.Long.IsNullOrEmpty();
