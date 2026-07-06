@@ -124,20 +124,20 @@ public class YelpService : IYelpService
             return APIResult<Business>.Fail($"Problem getting bussiness using phone number: {number}", result.StatusCode);
     }
 
-    public async virtual Task<APIResult<List<Business>>> GetBusinessesByKeywords(List<string> keywords, string lat, string lng, string location)
+    public async virtual Task<APIResult<List<Business>>> GetBusinessesByKeywords(SearchRequest request)
     {
         string terms = "food, dinner, restaurant";
         
-        if(keywords.Count > 0)
-            terms += ", " + string.Join(", ", dto.Terms);    
+        if(request.Keywords.Count > 0)
+            terms += ", " + string.Join(", ", request.Latitude);    
 
-        bool IsMissingCoordinates = dto.Lat.IsNullOrEmpty() || dto.Long.IsNullOrEmpty();
+        bool IsMissingCoordinates = request.Latitude.IsNullOrEmpty() || request.Longitude.IsNullOrEmpty();
 
-        if (IsMissingCoordinates && dto.Location.IsNullOrEmpty())
+        if (IsMissingCoordinates && request.Location.IsNullOrEmpty())
             throw new NullReferenceException("There are no values for the following variables: Lat, Long, & Location.");  
         
         string endpoint ="/businesses/search"; 
-        var query = $"?sort_by=best_match&limit={dto.Limit}&term={terms}&location={dto.Location}&latitude={dto.Lat}&longitude={dto.Long}";
+        var query = $"?sort_by=best_match&limit={request.Limit}&term={terms}&location={request.Location}&latitude={request.Latitude}&longitude={request.Longitude}";
         
         HttpClient client = CreateClient();
 

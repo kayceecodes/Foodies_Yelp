@@ -2,7 +2,7 @@
 
 public class SearchRequest 
 {
-    public List<string> Terms { get; set; }
+    public List<string> Keywords { get; set; }
     public string Location { get; set; }
     public string Latitude { get; set; }
     public string Longitude { get; set; }
