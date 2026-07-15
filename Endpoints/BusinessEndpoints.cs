@@ -85,7 +85,8 @@ public static class BusinessEndpoints
         app.MapPost("/api/businesses/search/{keywords}", async Task<IResult> ([FromServices] IMapper mapper, SearchDto searchDto) =>
         {
             var YelpService = app.Services.GetRequiredService<YelpService>();
-            APIResult<List<Business>> result = await YelpService.GetBusinessesByKeywords(searchDto);
+            var mappedRequest = mapper.Map<SearchDto, SearchRequest>(searchDto);
+            APIResult<List<Business>> result = await YelpService.GetBusinessesByKeywords(mappedRequest);
 
             if (result.IsSuccess)
             {

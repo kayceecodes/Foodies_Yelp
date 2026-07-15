@@ -1,5 +1,6 @@
 ﻿using foodies_yelp.Models.Dtos.Responses.Yelp;
 using AutoMapper;
+using foodies_yelp.Models.Dtos.Requests;
 
 namespace foodies_yelp.Profiles.BusinessProfile;
 
