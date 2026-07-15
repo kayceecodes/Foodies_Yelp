@@ -23,5 +23,9 @@ public class BusinessProfile : Profile
         .ForMember(dest => dest.State, src => src.MapFrom(x => x.Location.State))
         .ForMember(dest => dest.ZipCode, src => src.MapFrom(x => x.Location.Zip_code))
         .ForMember(dest => dest.Price, src => src.MapFrom(x => x.Price));
+
+        CreateMap<SearchDto, SearchRequest>()
+         .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
     }
+
 }
