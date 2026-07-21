@@ -7,5 +7,5 @@ public class SearchRequest
     public string Longitude { get; set; }
     public string Offset { get; set; }
     public string Limit { get; set; }
-    public double? RadiusMeters { get; set; }
+    public string? RadiusMeters { get; set; }
 }    

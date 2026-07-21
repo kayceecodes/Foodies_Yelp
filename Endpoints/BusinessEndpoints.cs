@@ -82,11 +82,11 @@ public static class BusinessEndpoints
         .Produces(StatusCodes.Status500InternalServerError);
 
         // Uses Search object with propeerties used in Yelp's API
-        app.MapPost("/api/businesses/search/{keywords}", async Task<IResult> ([FromServices] IMapper mapper, SearchDto searchDto) =>
+        app.MapPost("/api/businesses/search/", async Task<IResult> ([FromServices] IMapper mapper, [FromBody] SearchDto searchDto) =>
         {
             var YelpService = app.Services.GetRequiredService<YelpService>();
-            var mappedRequest = mapper.Map<SearchDto, SearchRequest>(searchDto);
-            APIResult<List<Business>> result = await YelpService.GetBusinessesByKeywords(mappedRequest);
+            var mappedRequest = mapper.Map<SearchRequest>(searchDto);
+            var result = await YelpService.GetBusinessesByKeywords(mappedRequest);
 
             if (result.IsSuccess)
             {

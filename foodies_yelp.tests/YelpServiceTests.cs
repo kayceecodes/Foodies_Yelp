@@ -196,14 +196,13 @@ public class YelpServiceTests
         CreateMockHttpClient(HttpStatusCode.OK, yelpResponse);
 
         var service = CreateYelpService();
-        var searchDto = new SearchDto() 
+        var searchRequest = new SearchRequest() 
         {
-            Location = "Test Location",
-            Lat = "0",
-            Long = "0",
+            Latitude = "90",
+            Longitude = "180",
             Keywords = ["test", "term"],        
         };
-        var response = service.GetBusinessesByKeywords(searchDto);
+        var response = service.GetBusinessesByKeywords(searchRequest);
         var lastBusiness = response.Result.Data.Last();
         
         Assert.That(response.Result.IsSuccess.Equals(true));

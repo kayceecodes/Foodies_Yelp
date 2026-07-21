@@ -10,18 +10,22 @@ const string AllowLocalDevelopment = "AllowLocalDevelopment";
 
 ConfigurationManager configuration = builder.Configuration;
 
-builder.Services.AddAutoMapper(typeof(BusinessProfile), typeof(ReviewProfile));
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.AddProfile<BusinessProfile>();
+    cfg.AddProfile<ReviewProfile>();
+});
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: AllowLocalDevelopment,
-                      policy  =>
-                      {
-                          policy.WithOrigins("http://localhost:3000",
-                                              "http://localhost:3001")
-                                .AllowAnyHeader()
-                                .AllowAnyMethod();
-                      });
+                policy  =>
+                {
+                    policy.WithOrigins("http://localhost:3000",
+                                        "http://localhost:3001")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
 });
 
 // Configure services

@@ -25,7 +25,11 @@ public class BusinessProfile : Profile
         .ForMember(dest => dest.Price, src => src.MapFrom(x => x.Price));
 
         CreateMap<SearchDto, SearchRequest>()
-         .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+         .ForMember(dest => dest.Latitude, src => src.MapFrom(x => x.Latitude.ToString()))
+         .ForMember(dest => dest.Longitude, src => src.MapFrom(x => x.Longitude.ToString()))
+         .ForMember(dest => dest.RadiusMeters, src => src.MapFrom(x => x.RadiusMeters.ToString()))
+         .ForAllMembers(opts => opts.Condition((src, dest, srcMember) =>
+             srcMember != null));
     }
 
 }

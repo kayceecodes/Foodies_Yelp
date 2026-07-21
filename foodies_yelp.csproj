@@ -14,28 +14,28 @@
   </Target>
 
   <ItemGroup>
-    <PackageReference Include="Automapper" Version="13.0.1" />
+    <PackageReference Include="Automapper" Version="16.2.0" />
     <PackageReference Include="Json.Net" Version="1.0.33" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.1">
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.10">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.1">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.10">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Moq" Version="4.20.70" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0" />
-    <PackageReference Include="NUnit" Version="4.1.0" />
-    <PackageReference Include="Restsharp" Version="110.2.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="Moq" Version="4.20.72" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.3" />
+    <PackageReference Include="NUnit" Version="4.6.1" />
+    <PackageReference Include="Restsharp" Version="114.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.2.3" />
   </ItemGroup>
 
-     <ItemGroup>
+  <ItemGroup>
     <Folder Include="Models/Dtos/Requests/" />
   </ItemGroup>
 
